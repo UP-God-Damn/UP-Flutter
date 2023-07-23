@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:up/screen/homepage.dart';
+import 'Sign in and Sign up/choose.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       designSize: const Size(430, 932),
       builder: (context, child) {
         return const MaterialApp(
-          home: HomePage(),
+          debugShowCheckedModeBanner: false,
+          home: Choose(),
         );
       },
     );
