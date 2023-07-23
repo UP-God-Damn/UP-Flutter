@@ -30,6 +30,7 @@ class _ChooseState extends State<Choose> {
           Text(
             '해결하지 못한 에러를 해결해드립니다',
             style: TextStyle(
+              fontFamily: 'NotoSansKR',
               color: Colors.white,
               fontSize: 17.sp,
             ),
@@ -70,6 +71,8 @@ class _ChooseState extends State<Choose> {
                             '로그인',
                             textAlign: TextAlign.center,
                             style: TextStyle(
+                              fontFamily: 'NotoSansKR',
+                              fontWeight: FontWeight.bold,
                               fontSize: 17.sp,
                               color: Colors.white,
                             ),
@@ -104,6 +107,8 @@ class _ChooseState extends State<Choose> {
                             '회원가입',
                             textAlign: TextAlign.center,
                             style: TextStyle(
+                              fontFamily: 'NotoSansKR',
+                              fontWeight: FontWeight.bold,
                               fontSize: 17.sp,
                               color: Colors.white,
                             ),
