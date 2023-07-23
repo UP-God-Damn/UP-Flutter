@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'package:up/Sign in and Sign up/sign_in.dart';
+import 'package:up/Sign in and Sign up/sign_up.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Choose extends StatefulWidget {
@@ -44,6 +48,13 @@ class _ChooseState extends State<Choose> {
                 SizedBox(height: 143.h),
                 //로그인 버튼
                 GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignIn(),
+                        ));
+                  },
                   child: Container(
                     width: 350.w,
                     height: 49.h,
@@ -71,6 +82,13 @@ class _ChooseState extends State<Choose> {
                 SizedBox(height: 25.h),
                 //회원가입 버튼
                 GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignUp(),
+                        ));
+                  },
                   child: Container(
                     width: 350.w,
                     height: 49.h,
