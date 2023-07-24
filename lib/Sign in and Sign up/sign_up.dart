@@ -313,18 +313,15 @@ class _SignUpState extends State<SignUp> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                               ),
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 14.h),
-                                  child: Text(
-                                    '회원가입',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.sp,
-                                      fontFamily: 'NotoSansKR',
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                              child: Center(
+                                child: Text(
+                                  '회원가입',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.sp,
+                                    fontFamily: 'NotoSansKR',
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),

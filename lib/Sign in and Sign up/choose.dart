@@ -43,7 +43,6 @@ class _ChooseState extends State<Choose> {
             padding: EdgeInsets.only(top: 225.h),
             child: Container(
               width: double.infinity,
-              height: 430.h,
               decoration: const BoxDecoration(
                 color: Color(0xFFF3F3F3),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(80)),
@@ -70,23 +69,16 @@ class _ChooseState extends State<Choose> {
                           color: Color(0xFF191C1B),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: SizedBox(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 16.h),
-                                child: Text(
-                                  '로그인',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17.sp,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        child: Center(
+                          child: Text(
+                            '로그인',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'NotoSansKR',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.sp,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -94,7 +86,7 @@ class _ChooseState extends State<Choose> {
                   ),
                   //회원가입 버튼
                   Padding(
-                    padding: EdgeInsets.only(top: 25.h),
+                    padding: EdgeInsets.only(top: 25.h, bottom: 159.h),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -110,23 +102,16 @@ class _ChooseState extends State<Choose> {
                           color: Color(0xFF191C1B),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: SizedBox(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 16.h),
-                                child: Text(
-                                  '회원가입',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17.sp,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        child: Center(
+                          child: Text(
+                            '회원가입',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'NotoSansKR',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.sp,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
