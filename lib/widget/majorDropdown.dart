@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ErrorDropdown extends StatefulWidget {
-  const ErrorDropdown({super.key});
+class MajorDropdown extends StatefulWidget {
+  const MajorDropdown({super.key});
 
   @override
-  State<ErrorDropdown> createState() => _ErrorDropdownState();
+  State<MajorDropdown> createState() => _MajorDropdownState();
 }
 
-class _ErrorDropdownState extends State<ErrorDropdown> {
-  final List<String> major = ['오류', '해결'];
+class _MajorDropdownState extends State<MajorDropdown> {
+  final List<String> major = ['프론트엔드', '백엔드', 'AOS', 'IOS', 'Flutter', '임베디드'];
   String? selectedValue;
 
   @override
@@ -18,10 +18,9 @@ class _ErrorDropdownState extends State<ErrorDropdown> {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
-        iconStyleData: IconStyleData(iconSize: 15.w),
         hint: Text(
-          '오류/해결',
-          textAlign: TextAlign.center,
+          //hintText
+          '전공',
           style: TextStyle(
             fontFamily: 'NotoSansKR',
             fontSize: 10.sp,
