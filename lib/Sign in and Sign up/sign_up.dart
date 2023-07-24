@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:up/Sign in and Sign up/sign_in.dart';
-import 'package:up/Sign in and Sign up/choose.dart';
-
 import 'package:up/widget/customdropdown.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
