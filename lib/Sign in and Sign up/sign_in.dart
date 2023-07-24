@@ -12,6 +12,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final _id = TextEditingController();
+  final _pw = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,8 +95,9 @@ class _SignInState extends State<SignIn> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(left: 16.w),
-                          child: const TextField(
-                            decoration: InputDecoration(
+                          child: TextField(
+                            controller: _id,
+                            decoration: const InputDecoration(
                               hintText: '아이디를 입력해주세요',
                               border: InputBorder.none,
                             ),
@@ -131,8 +135,9 @@ class _SignInState extends State<SignIn> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(left: 16.w),
-                          child: const TextField(
-                            decoration: InputDecoration(
+                          child: TextField(
+                            controller: _pw,
+                            decoration: const InputDecoration(
                               hintText: '비밀번호를 입력해주세요',
                               border: InputBorder.none,
                             ),
