@@ -190,11 +190,13 @@ class _SignInState extends State<SignIn> {
                     SizedBox(width: 8.w),
                     GestureDetector(
                       onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (_) => false);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignUp(),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUp()),
+                        );
                       },
                       child: Text(
                         '회원가입',
