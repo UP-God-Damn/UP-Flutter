@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-class CustomDropdown extends StatefulWidget {
-  const CustomDropdown({super.key});
+class SignUpDropdown extends StatefulWidget {
+  const SignUpDropdown({super.key});
 
   @override
-  State<CustomDropdown> createState() => _CustomDropdownState();
+  State<SignUpDropdown> createState() => _SignUpDropdownState();
 }
 
-class _CustomDropdownState extends State<CustomDropdown> {
+class _SignUpDropdownState extends State<SignUpDropdown> {
   final List<String> major = ['프론트엔드', '백엔드', 'AOS', 'IOS', 'Flutter', '임베디드'];
   String? selectedValue;
 
