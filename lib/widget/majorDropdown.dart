@@ -18,6 +18,7 @@ class _MajorDropdownState extends State<MajorDropdown> {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
+        iconStyleData: IconStyleData(iconSize: 15.w),
         hint: Text(
           //hintText
           '전공',
@@ -33,7 +34,7 @@ class _MajorDropdownState extends State<MajorDropdown> {
                   child: Text(
                     item,
                     style: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                     ),
                   ),
                 ))

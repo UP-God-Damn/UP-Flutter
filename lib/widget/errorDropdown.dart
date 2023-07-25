@@ -17,14 +17,14 @@ class _ErrorDropdownState extends State<ErrorDropdown> {
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
-        isExpanded: true,
+        //isExpanded: true,
         iconStyleData: IconStyleData(iconSize: 15.w),
         hint: Text(
           '오류/해결',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'NotoSansKR',
-            fontSize: 10.sp,
+            fontSize: 9.sp,
             color: Theme.of(context).hintColor,
           ),
         ),
