@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:up/screen/mainpageappbar.dart';
-import 'package:up/screen/mainpagebody.dart';
-import 'package:up/screen/floatingbutton.dart';
+import 'package:up/mainscreen/mainpageappbar.dart';
+import 'package:up/mainscreen/mainpagebody.dart';
+import 'package:up/mainscreen/floatingbutton.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

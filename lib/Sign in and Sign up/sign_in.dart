@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:up/Sign in and Sign up/sign_up.dart';
-import 'package:up/screen/mainpage.dart';
+import 'package:up/mainscreen/mainpage.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
