@@ -7,6 +7,8 @@ import 'package:up/widget/errorDropdown.dart';
 import 'package:up/widget/mainlist.dart';
 
 Column mainPageBody() {
+  final maintitleController = TextEditingController();
+
   return Column(
     children: [
       Padding(
@@ -21,8 +23,9 @@ Column mainPageBody() {
           ),
           child: Padding(
             padding: EdgeInsets.only(left: 16.w),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              controller: maintitleController,
+              decoration: const InputDecoration(
                 hintText: '제목을 입력해주세요',
                 border: InputBorder.none,
                 suffixIcon: Icon(Icons.search),
