@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
       appBar: mainPageAppbar(context),
       body: const MainPageBody(),
       floatingActionButton: pancilButton(context),
-      drawer: mainDrawer(),
+      drawer: const MainDrawer(),
     );
   }
 }
