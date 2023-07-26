@@ -6,7 +6,7 @@ AppBar detailsAppbar(title, context) {
     backgroundColor: const Color(0xFFF3F3F3),
     centerTitle: false,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+      icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
       onPressed: () {
         Navigator.pop(context);
       },

@@ -76,8 +76,10 @@ SingleChildScrollView createBody(context) {
               padding: EdgeInsets.only(left: 15.w, right: 15.w),
               child: TextField(
                 controller: titleController,
+                style: TextStyle(fontSize: 15.sp),
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(fontSize: 12.sp),
+                  hintStyle:
+                      TextStyle(fontSize: 15.sp, fontFamily: 'NotoSansKR'),
                   hintText: '제목을 입력해주세요',
                   border: InputBorder.none,
                 ),
@@ -129,9 +131,11 @@ SingleChildScrollView createBody(context) {
               padding: EdgeInsets.only(left: 15.w, right: 15.w),
               child: TextField(
                 maxLines: 100000,
+                style: TextStyle(fontSize: 15.sp),
                 controller: contentController,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(fontSize: 12.sp),
+                  hintStyle:
+                      TextStyle(fontSize: 15.sp, fontFamily: 'NotoSansKR'),
                   hintText: '내용을 입력해주세요\n코드는 구분하기 쉽게 구분선으로 구분해 주세요',
                   border: InputBorder.none,
                 ),
