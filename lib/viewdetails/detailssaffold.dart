@@ -19,7 +19,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: detailsAppbar(title, context),
-      body: detailsBody(tag, major, contant, reply),
+      body: detailsBody(tag, major, contant, reply, context),
     );
   }
 }

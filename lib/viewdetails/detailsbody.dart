@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:up/widget/mainlist.dart';
 
-Column detailsBody(tag, major, contant, reply) {
+import 'package:up/reply/reply.dart';
+
+Column detailsBody(tag, major, contant, reply, context) {
   return Column(
     children: [
       Padding(
         padding: EdgeInsets.fromLTRB(20.w, 31.64.h, 20.w, 9.h),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '내용',
@@ -18,52 +21,55 @@ Column detailsBody(tag, major, contant, reply) {
                 fontFamily: 'NotoSansKR',
               ),
             ),
-            const Expanded(child: SizedBox(width: double.infinity)),
-            Padding(
-              padding: EdgeInsets.only(right: 6.w),
-              child: Container(
-                width: 89.w,
-                height: 25.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(7)),
-                  border: Border.all(color: const Color(0xFFABABAB)),
-                ),
-                child: Center(
-                  child: Text(
-                    tag,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'NotoSansKR',
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 6.w),
+                  child: Container(
+                    width: 89.w,
+                    height: 25.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(7)),
+                      border: Border.all(color: const Color(0xFFABABAB)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        tag,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'NotoSansKR',
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 6.w),
-              child: Container(
-                width: 89.w,
-                height: 25.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(7)),
-                  border: Border.all(color: const Color(0xFFABABAB)),
-                ),
-                child: Center(
-                  child: Text(
-                    major,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'NotoSansKR',
+                Padding(
+                  padding: EdgeInsets.only(right: 6.w),
+                  child: Container(
+                    width: 89.w,
+                    height: 25.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(7)),
+                      border: Border.all(color: const Color(0xFFABABAB)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        major,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'NotoSansKR',
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
@@ -96,11 +102,11 @@ Column detailsBody(tag, major, contant, reply) {
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(left: 20.w),
-        child: Expanded(
-          child: SizedBox(
-            width: double.infinity,
-            child: Text(
+        padding: EdgeInsets.only(left: 20.w, right: 20.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
               '댓글',
               style: TextStyle(
                 color: Colors.black,
@@ -109,64 +115,55 @@ Column detailsBody(tag, major, contant, reply) {
                 fontFamily: 'NotoSansKR',
               ),
             ),
-          ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Reply(),
+                    ));
+              },
+              child: Text(
+                '댓글 쓰러가기>',
+                style: TextStyle(
+                  color: const Color(0xFF767676),
+                  fontSize: 12.sp,
+                ),
+              ),
+            )
+          ],
         ),
       ),
+      SizedBox(height: 10.h),
       Expanded(
         child: Padding(
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
           child: ListView.builder(
             itemCount: contantList.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Container(
-                  width: 390.w,
-                  height: 72.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: const Color(0xFFABABAB)),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(
+                    color: Color(0xFF555656),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 15.w, top: 14.h, bottom: 2.h),
-                        child: Text(
-                          '이재영',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontFamily: 'NotoSansKR',
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
+                    child: Text(
+                      reply,
+                      style: TextStyle(
+                        fontSize: 17.sp,
+                        fontFamily: 'NotoSansKR',
+                        fontWeight: FontWeight.w400,
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 15.w, right: 15.w),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              reply,
-                              style: TextStyle(
-                                fontSize: 17.sp,
-                                fontFamily: 'NotoSansKR',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                ],
               );
             },
           ),
         ),
-      )
+      ),
     ],
   );
 }

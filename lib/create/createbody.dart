@@ -14,51 +14,60 @@ SingleChildScrollView createBody(context) {
         Padding(
           padding: EdgeInsets.fromLTRB(20.w, 31.64.h, 20.w, 6.h),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: EdgeInsets.only(right: 7.w),
-                child: Text(
-                  '제목',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'NotoSansKR',
-                    color: Colors.black,
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 7.w),
+                    child: Text(
+                      '제목',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR',
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Text(
-                '※오류코드를 입력해주세요',
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  fontFamily: 'NotoSansKR',
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-              const Expanded(child: SizedBox(width: double.infinity)),
-              Padding(
-                padding: EdgeInsets.only(right: 6.w),
-                child: Container(
-                  width: 89.w,
-                  height: 25.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(7)),
-                    border: Border.all(color: const Color(0xFFABABAB)),
+                  Text(
+                    '※오류코드를 입력해주세요',
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: 'NotoSansKR',
+                      fontWeight: FontWeight.w200,
+                    ),
                   ),
-                  child: const ErrorDropdown(),
-                ),
+                ],
               ),
-              Container(
-                width: 89.w,
-                height: 25.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(7)),
-                  border: Border.all(color: const Color(0xFFABABAB)),
-                ),
-                child: const MajorDropdown(),
-              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 6.w),
+                    child: Container(
+                      width: 89.w,
+                      height: 25.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7)),
+                        border: Border.all(color: const Color(0xFFABABAB)),
+                      ),
+                      child: const ErrorDropdown(),
+                    ),
+                  ),
+                  Container(
+                    width: 89.w,
+                    height: 25.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(7)),
+                      border: Border.all(color: const Color(0xFFABABAB)),
+                    ),
+                    child: const MajorDropdown(),
+                  ),
+                ],
+              )
             ],
           ),
         ),
