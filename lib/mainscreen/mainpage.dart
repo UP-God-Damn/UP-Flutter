@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:up/mainscreen/drawer.dart';
 import 'package:up/mainscreen/mainpageappbar.dart';
 import 'package:up/mainscreen/mainpagebody.dart';
 import 'package:up/mainscreen/floatingbutton.dart';
@@ -16,9 +17,10 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F3F3),
-      appBar: mainPageAppbar(),
+      appBar: mainPageAppbar(context),
       body: mainPageBody(),
       floatingActionButton: pancilButton(context),
+      drawer: mainDrawer(),
     );
   }
 }
