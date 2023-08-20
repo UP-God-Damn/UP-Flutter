@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:up/Sign in and Sign up/sign_in.dart';
-import 'package:up/widget/customdropdown.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUp extends StatefulWidget {
@@ -265,112 +263,78 @@ class _SignUpState extends State<SignUp> {
                 //
                 //
                 //
-                ///전공
-                Padding(
-                  padding: EdgeInsets.only(top: 20.h),
-                  child: SizedBox(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 61.w),
-                            Text(
-                              '전공',
+                Column(
+                  children: [
+                    ///회원가입 버튼
+                    Padding(
+                      padding: EdgeInsets.only(top: 50.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: 330.w,
+                          height: 45.h,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF191C1B),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '회원가입',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
+                                color: Colors.white,
                                 fontSize: 15.sp,
+                                fontFamily: 'NotoSansKR',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    ///계정이 있으신가요?
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '계정이 있으신가요?',
+                            style: TextStyle(
+                              color: const Color(0xFFABABAB),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'NotoSansKR',
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/', (_) => false);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignIn()),
+                              );
+                            },
+                            child: Text(
+                              '로그인',
+                              style: TextStyle(
+                                color: const Color(0xFF191C1B),
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'NotoSansKR',
                               ),
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3.h),
-                          child: Container(
-                            width: 330.w,
-                            height: 45.h,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: const SignUpDropdown(),
                           ),
-                        ),
-
-                        ///회원가입 버튼
-                        Padding(
-                          padding: EdgeInsets.only(top: 50.h),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              width: 330.w,
-                              height: 45.h,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF191C1B),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '회원가입',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.sp,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        ///계정이 있으신가요?
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '계정이 있으신가요?',
-                                style: TextStyle(
-                                  color: const Color(0xFFABABAB),
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'NotoSansKR',
-                                ),
-                              ),
-                              SizedBox(width: 8.w),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/', (_) => false);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const SignIn()),
-                                  );
-                                },
-                                child: Text(
-                                  '로그인',
-                                  style: TextStyle(
-                                    color: const Color(0xFF191C1B),
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'NotoSansKR',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
