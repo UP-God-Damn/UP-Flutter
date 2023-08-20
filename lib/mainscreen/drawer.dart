@@ -43,19 +43,21 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             tileColor: const Color(0xFFF3F3F3),
             leading: const Icon(
-              Icons.lightbulb,
+              Icons.turned_in,
               color: Color(0xFF191C1B),
             ),
             title: Text(
-              '내가 쓴 글 ↓↓↓',
+              '작성한 글',
               style: TextStyle(
                 color: const Color(0xFF191C1B),
                 fontFamily: 'NotoSansKR',
-                fontSize: 14.sp,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.bold,
                 letterSpacing: -0.41,
               ),
             ),
           ),
+          Container(color: Colors.black, height: 1.h),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
@@ -86,19 +88,34 @@ class MainDrawer extends StatelessWidget {
                   },
                   child: ListTile(
                     tileColor: const Color(0xFFF3F3F3),
-                    title: Text(
-                      mainList[index]['title'],
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: 'NotoSansKR',
-                        color: Colors.black,
+                    title: SingleChildScrollView(
+                      reverse: false,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: 'NotoSansKR',
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                    leading: Icon(
-                      mainList[index]['tag'] == true
-                          ? Icons.check_circle
-                          : Icons.error,
-                      color: const Color(0xFF191C1B),
+                    leading: SizedBox(
+                      width: 38.w,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 11.w,
+                          ),
+                          Icon(
+                            mainList[index]['tag'] == true
+                                ? Icons.check_circle
+                                : Icons.error,
+                            color: mainList[index]['tag'] == true
+                                ? const Color(0xFFDA6156)
+                                : const Color(0xFF7DB45A),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

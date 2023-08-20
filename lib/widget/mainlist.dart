@@ -85,9 +85,47 @@ final List<Map<String, dynamic>> mainList = [
     'tag': false,
     'day': '2023-07-19',
   },
+  {
+    'title': '진짜 너무 귀찮다',
+    'name': '이재영',
+    'major': '백엔드',
+    'tag': false,
+    'day': '2023-07-19',
+  }
 ];
 
 final List<Map<String, dynamic>> contantList = [
+  {
+    'contant': '아니 진짜 오류가 너무 안풀려서 너무 힘들어요 이 오류 아시는분 진짜 한번만 풀어주세요\n'
+        '------------------------------------------------\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '살려줘요\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '힘들어요\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n'
+        '#include <studio.h>\n',
+    'reply': '그거 그렇게 하는거 아닌데',
+  },
   {
     'contant': '아니 진짜 오류가 너무 안풀려서 너무 힘들어요 이 오류 아시는분 진짜 한번만 풀어주세요\n'
         '------------------------------------------------\n'
