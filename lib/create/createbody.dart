@@ -97,7 +97,7 @@ SingleChildScrollView createBody(context) {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 20.w),
+          padding: EdgeInsets.only(left: 20.w, bottom: 10.h),
           child: Row(
             children: [
               Padding(
