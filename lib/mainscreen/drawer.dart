@@ -64,6 +64,7 @@ class MainDrawer extends StatelessWidget {
                 String title = mainList[index]['title'],
                     tag = mainList[index]['tag'] ? '해결' : '오류',
                     major = mainList[index]['major'],
+                    day = mainList[index]['day'],
                     contant = contantList[index]['contant'],
                     reply = contantList[index]['reply'];
 
@@ -76,6 +77,7 @@ class MainDrawer extends StatelessWidget {
                             title: title,
                             tag: tag,
                             major: major,
+                            day: day,
                             contant: contant,
                             reply: reply,
                             key: key),

@@ -4,7 +4,7 @@ import 'package:up/viewdetails/detailsappbar.dart';
 import 'package:up/viewdetails/detailsbody.dart';
 
 class Details extends StatelessWidget {
-  final String title, tag, major, contant, reply;
+  final String title, tag, major, contant, reply, day;
 
   const Details({
     required this.title,
@@ -12,6 +12,7 @@ class Details extends StatelessWidget {
     required this.major,
     required this.contant,
     required this.reply,
+    required this.day,
     required Key? key,
   }) : super(key: key);
 
@@ -19,7 +20,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: detailsAppbar(title, context),
-      body: detailsBody(tag, major, contant, reply, context),
+      body: detailsBody(tag, major, contant, reply, context, day),
     );
   }
 }

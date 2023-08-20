@@ -4,7 +4,7 @@ import 'package:up/widget/mainlist.dart';
 
 import 'package:up/reply/reply.dart';
 
-Column detailsBody(tag, major, contant, reply, context) {
+Column detailsBody(tag, major, contant, reply, context, day) {
   return Column(
     children: [
       Padding(
@@ -23,6 +23,29 @@ Column detailsBody(tag, major, contant, reply, context) {
             ),
             Row(
               children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 6.w),
+                  child: Container(
+                    width: 89.w,
+                    height: 25.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(7)),
+                      border: Border.all(color: const Color(0xFFABABAB)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        day,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'NotoSansKR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(right: 6.w),
                   child: Container(
