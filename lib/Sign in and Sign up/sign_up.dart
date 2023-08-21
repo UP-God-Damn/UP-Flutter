@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:up/Sign in and Sign up/sign_in.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:up/Sign in and Sign up/sign_up2.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -55,7 +56,7 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Sign Up',
+                        '회원가입',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
@@ -138,27 +139,53 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3.h),
-                          child: Container(
-                            width: 330.w,
-                            height: 45.h,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 16.w),
-                              child: TextField(
-                                controller: _id,
-                                decoration: const InputDecoration(
-                                  hintText: '아이디를 입력해주세요',
-                                  border: InputBorder.none,
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 3.h, left: 50.w, right: 5.w),
+                              child: Container(
+                                width: 239.w,
+                                height: 45.h,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 16.w),
+                                  child: TextField(
+                                    controller: _id,
+                                    decoration: const InputDecoration(
+                                      hintText: '아이디를 입력해주세요',
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            GestureDetector(
+                              child: Container(
+                                width: 86.w,
+                                height: 42.h,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF191C1B),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '중복확인',
+                                    style: TextStyle(
+                                      color: Color(0xFFFFFFFF),
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'NotoSansKR',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),
@@ -265,12 +292,16 @@ class _SignUpState extends State<SignUp> {
                 //
                 Column(
                   children: [
-                    ///회원가입 버튼
+                    ///다음으로 버튼
                     Padding(
                       padding: EdgeInsets.only(top: 50.h),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUp2(),
+                              ));
                         },
                         child: Container(
                           width: 330.w,
@@ -281,7 +312,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           child: Center(
                             child: Text(
-                              '회원가입',
+                              '다음으로',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
