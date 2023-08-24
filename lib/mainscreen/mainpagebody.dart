@@ -16,6 +16,10 @@ class MainPageBody extends StatelessWidget {
 
     return Column(
       children: [
+        //
+        //
+        //
+        ///제목을 입력해주세요 검색창
         Padding(
           padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 29.64.h),
           child: Container(
@@ -39,6 +43,9 @@ class MainPageBody extends StatelessWidget {
             ),
           ),
         ),
+        //
+        //
+        /// 오류/해결 드롭다운
         Padding(
           padding: EdgeInsets.only(top: 7.h),
           child: Row(
@@ -54,6 +61,10 @@ class MainPageBody extends StatelessWidget {
                 ),
                 child: const ErrorDropdown(),
               ),
+              //
+              //
+              //
+              /// 전공 선택 드롭다운
               Padding(
                 padding: EdgeInsets.only(right: 20.w, left: 6.w),
                 child: Container(
@@ -70,10 +81,15 @@ class MainPageBody extends StatelessWidget {
             ],
           ),
         ),
+        //
+        //
+        //
+        ///ListView
         Expanded(
           child: Padding(
             padding: EdgeInsets.only(top: 32.h),
             child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: mainList.length,
               itemBuilder: (context, index) {
                 String title = mainList[index]['title'],
@@ -87,6 +103,7 @@ class MainPageBody extends StatelessWidget {
                   padding:
                       EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
                   child: GestureDetector(
+                    /// 누르면 화면 들어감
                     onTap: () {
                       Navigator.push(
                         context,
@@ -116,9 +133,23 @@ class MainPageBody extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 20.h),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(left: 16.w),
+                                  ///제목
+                                  padding: EdgeInsets.only(left: 17.w),
+                                  child: Text(
+                                    mainList[index]['title'],
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FontStyle.normal,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  ///태그
+                                  padding: EdgeInsets.only(right: 17.w),
                                   child: Container(
                                     width: 44.w,
                                     height: 15.h,
@@ -144,35 +175,28 @@ class MainPageBody extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 9.w),
-                                  child: Text(
-                                    mainList[index]['title'],
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 16.w, top: 3.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            padding: EdgeInsets.only(left: 17.w, top: 3.h),
+                            child: Row(
                               children: [
+                                Image.asset("assets/img/Star.png"),
+                                SizedBox(width: 3.w),
                                 Text(
-                                  mainList[index]['name'],
+                                  mainList[index]['major'],
                                   style: TextStyle(
                                     fontSize: 9.sp,
                                     fontFamily: 'NotoSansKR',
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
+                                SizedBox(width: 10.w),
+                                Image.asset("assets/img/World.png"),
+                                SizedBox(width: 3.w),
                                 Text(
-                                  mainList[index]['major'],
+                                  '다트',
                                   style: TextStyle(
                                     fontSize: 9.sp,
                                     fontFamily: 'NotoSansKR',
@@ -181,6 +205,32 @@ class MainPageBody extends StatelessWidget {
                                 )
                               ],
                             ),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 17.w, top: 8.w),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1000),
+                                  child: Image.asset(
+                                    "assets/img/Logo.png",
+                                    width: 17.w,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 4.w),
+                              Padding(
+                                padding: EdgeInsets.only(top: 10.h),
+                                child: Text(
+                                  mainList[index]['name'],
+                                  style: TextStyle(
+                                    fontSize: 9.sp,
+                                    fontFamily: 'NotoSansKR',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 14.w),
