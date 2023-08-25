@@ -15,14 +15,13 @@ AppBar mainPageAppbar(context) {
         );
       },
     ),
-    title: Image.asset('assets/img/slogo.png',
-        color: Colors.black, width: 43.w, height: 22.96.h),
-    actions: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.person, color: Colors.black),
-      ),
-    ],
+    title: Image.asset(
+      'assets/img/slogo.png',
+      color: Colors.black,
+      width: 43.w,
+      height: 22.96.h,
+    ),
+    centerTitle: true,
     elevation: 4,
   );
 }

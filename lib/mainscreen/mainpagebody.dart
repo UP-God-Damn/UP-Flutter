@@ -122,7 +122,7 @@ class MainPageBody extends StatelessWidget {
                     },
                     child: Container(
                       width: 390.w,
-                      height: 95.h,
+                      height: 100.h,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
