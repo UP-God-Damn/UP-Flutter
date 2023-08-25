@@ -39,85 +39,89 @@ class _ChooseState extends State<Choose> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 225.h),
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color(0xFFF3F3F3),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(80)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  //로그인 버튼
-                  Padding(
-                    padding: EdgeInsets.only(top: 143.h),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignIn(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 350.w,
-                        height: 49.h,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF191C1B),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '로그인',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'NotoSansKR',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17.sp,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  //회원가입 버튼
-                  Padding(
-                    padding: EdgeInsets.only(top: 25.h, bottom: 159.h),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+          Expanded(
+            /// 최대치
+            child: Padding(
+              padding: EdgeInsets.only(top: 225.h),
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF3F3F3),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(80)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ///로그인 버튼
+                    Padding(
+                      padding: EdgeInsets.only(top: 143.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SignUp(),
-                            ));
-                      },
-                      child: Container(
-                        width: 350.w,
-                        height: 49.h,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF191C1B),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '회원가입',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'NotoSansKR',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17.sp,
-                              color: Colors.white,
+                              builder: (context) => const SignIn(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 350.w,
+                          height: 49.h,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF191C1B),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '로그인',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'NotoSansKR',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17.sp,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  )
-                ],
+
+                    ///회원가입 버튼
+                    Padding(
+                      padding: EdgeInsets.only(top: 25.h), //bottom: 159.h
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignUp(),
+                              ));
+                        },
+                        child: Container(
+                          width: 350.w,
+                          height: 49.h,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF191C1B),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '회원가입',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'NotoSansKR',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

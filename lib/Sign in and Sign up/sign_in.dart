@@ -80,6 +80,7 @@ class _SignInState extends State<SignIn> {
                       padding: EdgeInsets.only(top: 51.h),
                       child: Column(
                         children: [
+                          /// 아이디 제목
                           Row(
                             children: [
                               Padding(
@@ -95,6 +96,8 @@ class _SignInState extends State<SignIn> {
                               ),
                             ],
                           ),
+
+                          /// 입력탭
                           Padding(
                             padding: EdgeInsets.only(top: 3.h),
                             child: Container(
@@ -107,11 +110,13 @@ class _SignInState extends State<SignIn> {
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(left: 16.w),
-                                child: TextField(
-                                  controller: _id,
-                                  decoration: const InputDecoration(
-                                    hintText: '아이디를 입력해주세요',
-                                    border: InputBorder.none,
+                                child: Center(
+                                  child: TextField(
+                                    controller: _id,
+                                    decoration: const InputDecoration(
+                                      hintText: '아이디를 입력해주세요',
+                                      border: InputBorder.none,
+                                    ),
                                   ),
                                 ),
                               ),
