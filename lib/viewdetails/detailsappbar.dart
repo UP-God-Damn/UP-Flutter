@@ -7,6 +7,7 @@ AppBar detailsAppbar(title, context) {
     centerTitle: false,
     leading: IconButton(
       icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+      padding: EdgeInsets.zero,
       onPressed: () {
         Navigator.pop(context);
       },
@@ -15,7 +16,7 @@ AppBar detailsAppbar(title, context) {
     title: Text(
       title,
       style: TextStyle(
-        fontSize: 20.sp,
+        fontSize: 15.sp,
         fontFamily: 'NotoSansKR',
         fontWeight: FontWeight.w200,
         color: Colors.black,
