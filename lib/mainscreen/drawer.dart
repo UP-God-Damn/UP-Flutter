@@ -57,7 +57,7 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
           ),
-          Container(color: Colors.black, height: 1.h),
+          Container(color: Colors.black, height: 1.h), //선
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
@@ -99,22 +99,15 @@ class MainDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    leading: SizedBox(
-                      width: 38.w,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 11.w,
-                          ),
-                          Icon(
-                            mainList[index]['tag'] == true
-                                ? Icons.check_circle
-                                : Icons.error,
-                            color: mainList[index]['tag'] == true
-                                ? const Color(0xFFDA6156)
-                                : const Color(0xFF7DB45A),
-                          )
-                        ],
+                    leading: Padding(
+                      padding: EdgeInsets.only(left: 11.w),
+                      child: Icon(
+                        mainList[index]['tag'] == true
+                            ? Icons.check_circle
+                            : Icons.error,
+                        color: mainList[index]['tag'] == true
+                            ? const Color(0xFFDA6156)
+                            : const Color(0xFF7DB45A),
                       ),
                     ),
                   ),
