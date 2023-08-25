@@ -121,134 +121,138 @@ class MainPageBody extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      width: 390.w,
-                      height: 100.h,
+                      /// 주위 감싸는 컨테이너
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 20.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  ///제목
-                                  padding: EdgeInsets.only(left: 17.w),
-                                  child: Text(
-                                    mainList[index]['title'],
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FontStyle.normal,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 5.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 20.h),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    ///제목
+                                    padding: EdgeInsets.only(left: 17.w),
+                                    child: Text(
+                                      mainList[index]['title'],
+                                      style: TextStyle(
+                                        fontSize: 17.sp,
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FontStyle.normal,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  ///태그
-                                  padding: EdgeInsets.only(right: 17.w),
-                                  child: Container(
-                                    width: 44.w,
-                                    height: 15.h,
-                                    decoration: BoxDecoration(
-                                      color: mainList[index]['tag'] == true
-                                          ? const Color(0xFF7DB45A)
-                                          : const Color(0xFFDA6156),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        mainList[index]['tag'] == true
-                                            ? '해결'
-                                            : '질문',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 9.sp,
-                                          fontFamily: 'NotoSansKR',
-                                          color: Colors.black,
+                                  Padding(
+                                    ///태그
+                                    padding: EdgeInsets.only(right: 17.w),
+                                    child: Container(
+                                      width: 44.w,
+                                      height: 15.h,
+                                      decoration: BoxDecoration(
+                                        color: mainList[index]['tag'] == true
+                                            ? const Color(0xFF7DB45A)
+                                            : const Color(0xFFDA6156),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          mainList[index]['tag'] == true
+                                              ? '해결'
+                                              : '질문',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 9.sp,
+                                            fontFamily: 'NotoSansKR',
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 17.w, top: 3.h),
-                            child: Row(
-                              children: [
-                                Image.asset("assets/img/Star.png"),
-                                SizedBox(width: 3.w),
-                                Text(
-                                  mainList[index]['major'],
-                                  style: TextStyle(
-                                    fontSize: 9.sp,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                SizedBox(width: 10.w),
-                                Image.asset("assets/img/World.png"),
-                                SizedBox(width: 3.w),
-                                Text(
-                                  '다트',
-                                  style: TextStyle(
-                                    fontSize: 9.sp,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 17.w, top: 8.w),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(1000),
-                                  child: Image.asset(
-                                    "assets/img/Logo.png",
-                                    width: 17.w,
-                                  ),
-                                ),
+                                ],
                               ),
-                              SizedBox(width: 4.w),
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.h),
-                                child: Text(
-                                  mainList[index]['name'],
-                                  style: TextStyle(
-                                    fontSize: 9.sp,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.w400,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 17.w, top: 3.h),
+                              child: Row(
+                                children: [
+                                  Image.asset("assets/img/Star.png"),
+                                  SizedBox(width: 3.w),
+                                  Text(
+                                    mainList[index]['major'],
+                                    style: TextStyle(
+                                      fontSize: 9.sp,
+                                      fontFamily: 'NotoSansKR',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.w),
+                                  Image.asset("assets/img/World.png"),
+                                  SizedBox(width: 3.w),
+                                  Text(
+                                    '다트',
+                                    style: TextStyle(
+                                      fontSize: 9.sp,
+                                      fontFamily: 'NotoSansKR',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 17.w, top: 8.w),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(1000),
+                                    child: Image.asset(
+                                      "assets/img/Logo.png",
+                                      width: 17.w,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 14.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  mainList[index]['day'],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 8.sp,
-                                    fontWeight: FontWeight.w100,
+                                SizedBox(width: 4.w),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10.h),
+                                  child: Text(
+                                    mainList[index]['name'],
+                                    style: TextStyle(
+                                      fontSize: 9.sp,
+                                      fontFamily: 'NotoSansKR',
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: EdgeInsets.only(right: 14.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    mainList[index]['day'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 8.sp,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
