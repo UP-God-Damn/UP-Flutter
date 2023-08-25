@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:up/reply/reply.dart';
+import 'package:up/modify/modefy.dart';
 
 detailsBody(tag, major, contant, reply, context, day, key) {
   return Column(
@@ -120,13 +121,36 @@ detailsBody(tag, major, contant, reply, context, day, key) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const Icon(Icons.mode, color: Color(0xFF767676)),
-            SizedBox(width: 4.w),
-            const Text('수정', style: TextStyle(color: Color(0xFF767676))),
-            SizedBox(width: 18.w),
-            const Icon(Icons.delete, color: Colors.red),
-            SizedBox(width: 4.w),
-            const Text('삭제', style: TextStyle(color: Colors.red))
+            /// 수정
+            Padding(
+              padding: EdgeInsets.only(right: 18.w),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Modefy(),
+                      ));
+                },
+                child: Row(
+                  children: [
+                    const Icon(Icons.mode, color: Color(0xFF767676)),
+                    SizedBox(width: 4.w),
+                    const Text('수정',
+                        style: TextStyle(color: Color(0xFF767676))),
+                  ],
+                ),
+              ),
+            ),
+
+            /// 삭제
+            Row(
+              children: [
+                const Icon(Icons.delete, color: Colors.red),
+                SizedBox(width: 4.w),
+                const Text('삭제', style: TextStyle(color: Colors.red))
+              ],
+            ),
           ],
         ),
       ),
