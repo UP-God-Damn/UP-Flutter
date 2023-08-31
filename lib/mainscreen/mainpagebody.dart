@@ -15,7 +15,7 @@ import 'package:up/url.dart';
 
 Future<PostMainList> getList() async {
   ///URL
-  var url = postListUrl;
+  var url = mainPost;
   const bearer = 'Bearer';
   final response = await http.get(
     Uri.parse(url),
