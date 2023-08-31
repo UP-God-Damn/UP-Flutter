@@ -14,13 +14,13 @@ import 'package:up/model/postMainList.dart';
 import 'package:up/url.dart';
 
 Future<PostMainList> getList() async {
+  ///URL
   var url = postListUrl;
   const bearer = 'Bearer';
   final response = await http.get(
     Uri.parse(url),
     headers: <String, String>{
-      HttpHeaders.authorizationHeader: '$bearer '
-          'eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsanlvMm85IiwiZXhwIjoxNjkzNDU2NzYzfQ.hTqKbPUKhkFwmEMbp0RX9lfA7HGAaF97gLcnFywEFAw'
+      HttpHeaders.authorizationHeader: '$bearer $token'
     },
   );
   if (response.statusCode == 200) {
