@@ -20,11 +20,10 @@ Future<PostMainList> getList() async {
     Uri.parse(url),
     headers: <String, String>{
       HttpHeaders.authorizationHeader: '$bearer '
-          'eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsanlvMm85IiwiZXhwIjoxNjkzNDM5NzcxfQ.pbd5ezQB2yP6zJdYqDm-I2Y-f_zLB4AbSO3_mfAQmfA'
+          'eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsanlvMm85IiwiZXhwIjoxNjkzNDUwOTYxfQ.fWPVLcYUflOn8IBtonPT2lp4kR5fxFWoXrl6qOPj21I'
     },
   );
   if (response.statusCode == 200) {
-    print(utf8.decode(response.bodyBytes));
     return PostMainList.fromJson(jsonDecode(
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
   } else {
@@ -138,24 +137,14 @@ class _MainPageBodyState extends State<MainPageBody> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: snapshot.data!.postResponses!.length,
                       itemBuilder: (context, index) {
-                        // "id": 12,
-                        // "userNickname": "chlgml",
-                        // "title": "chlgmlmhlksldmkmfnfjde",
+                        // "id": 2,
+                        // "userNickname": "모시깽이",
+                        // "profile": "http://up-image.s3-website.ap-northeast-2.amazonaws.com/b5362c9c-e08c-4a5d-abb4-f438ee7d88e5.jpg",
+                        // "title": "오류아좀아고쳐주세요오류우좀우고쳐주세요오류아좀우",
                         // "state": "질문",
                         // "major": "백엔드",
-                        // "language" : "java",
-                        // "createDate": "2023 / 08 / 18"
-
-                        // "profileImage" : "프로필",
-                        // "createDate": "2023 / 08 / 09",
-                        // "title": "이거씹으면 내일 아침에 점호가다가 레고밟음",
-                        // "content": "백엔드짱짱맨 아무도 백엔드를 이기지못함ㅋ",
-                        // "file" : "https://~~~"
-                        // "language": "JAVA",
-                        // "state": "질문",
-                        // "major": "백엔드",
-                        print(snapshot.data!.postResponses![index].title);
-
+                        // "language": "java",
+                        // "createDate": "2023 / 08 / 30"
                         final String title = snapshot
                             .data!.postResponses![index].title
                             .toString();
@@ -173,6 +162,9 @@ class _MainPageBodyState extends State<MainPageBody> {
                             .toString();
                         final String language = snapshot
                             .data!.postResponses![index].language
+                            .toString();
+                        final String image = snapshot
+                            .data!.postResponses![index].profile
                             .toString();
                         var contant = mainList[index]['contant'];
                         var reply = mainList[index]['reply'];
@@ -267,7 +259,7 @@ class _MainPageBodyState extends State<MainPageBody> {
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(left: 17.w, top: 3.h),
+                                          EdgeInsets.only(left: 17.w, top: 5.h),
                                       child: Row(
                                         children: [
                                           Image.asset("assets/img/Star.png"),
@@ -300,15 +292,18 @@ class _MainPageBodyState extends State<MainPageBody> {
                                     ),
                                     Row(
                                       children: [
+                                        /// 프로필 이미지
                                         Padding(
                                           padding: EdgeInsets.only(
                                               left: 17.w, top: 8.w),
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(1000),
-                                            child: Image.asset(
-                                              "assets/img/Logo.png",
+                                            borderRadius: BorderRadius.circular(
+                                                Checkbox.width),
+                                            child: Image.network(
+                                              image,
                                               width: 17.w,
+                                              height: 17.h,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),

@@ -1,25 +1,24 @@
 class PostMainList {
-  int? totalPage;
+  int? totalPosts;
   List<PostResponses>? postResponses;
 
-  PostMainList({this.totalPage, this.postResponses});
+  PostMainList({this.totalPosts, this.postResponses});
 
   PostMainList.fromJson(Map<String, dynamic> json) {
-    totalPage = json['totalPage'];
+    totalPosts = json['totalPosts'];
     if (json['postResponses'] != null) {
       postResponses = <PostResponses>[];
       json['postResponses'].forEach((v) {
-        postResponses!.add(new PostResponses.fromJson(v));
+        postResponses!.add(PostResponses.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalPage'] = this.totalPage;
-    if (this.postResponses != null) {
-      data['postResponses'] =
-          this.postResponses!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['totalPosts'] = totalPosts;
+    if (postResponses != null) {
+      data['postResponses'] = postResponses!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -28,6 +27,7 @@ class PostMainList {
 class PostResponses {
   int? id;
   String? userNickname;
+  String? profile;
   String? title;
   String? state;
   String? major;
@@ -37,6 +37,7 @@ class PostResponses {
   PostResponses(
       {this.id,
       this.userNickname,
+      this.profile,
       this.title,
       this.state,
       this.major,
@@ -46,6 +47,7 @@ class PostResponses {
   PostResponses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userNickname = json['userNickname'];
+    profile = json['profile'];
     title = json['title'];
     state = json['state'];
     major = json['major'];
@@ -54,14 +56,15 @@ class PostResponses {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userNickname'] = this.userNickname;
-    data['title'] = this.title;
-    data['state'] = this.state;
-    data['major'] = this.major;
-    data['language'] = this.language;
-    data['createDate'] = this.createDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userNickname'] = userNickname;
+    data['profile'] = profile;
+    data['title'] = title;
+    data['state'] = state;
+    data['major'] = major;
+    data['language'] = language;
+    data['createDate'] = createDate;
     return data;
   }
 }
