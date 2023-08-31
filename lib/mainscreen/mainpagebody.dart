@@ -9,7 +9,6 @@ import 'package:up/viewdetails/detailssaffold.dart';
 
 import 'package:up/widget/majorDropdown.dart';
 import 'package:up/widget/errorDropdown.dart';
-import 'package:up/widget/mainlist.dart';
 import 'package:up/model/postMainList.dart';
 import 'package:up/url.dart';
 
@@ -166,8 +165,8 @@ class _MainPageBodyState extends State<MainPageBody> {
                         final String image = snapshot
                             .data!.postResponses![index].profile
                             .toString();
-                        var contant = mainList[index]['contant'];
-                        var reply = mainList[index]['reply'];
+                        final String id =
+                            snapshot.data!.postResponses![index].id.toString();
 
                         return Padding(
                           padding: EdgeInsets.only(
@@ -179,12 +178,8 @@ class _MainPageBodyState extends State<MainPageBody> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Details(
-                                    title: title,
-                                    tag: tag,
-                                    major: major,
-                                    day: day,
-                                    contant: contant,
-                                    reply: reply,
+                                    index: index,
+                                    id: id,
                                     key: key,
                                   ),
                                 ),

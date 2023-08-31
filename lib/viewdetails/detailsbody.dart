@@ -5,7 +5,8 @@ import 'package:up/reply/reply.dart';
 import 'package:up/modify/modefy.dart';
 
 SingleChildScrollView detailsBody(
-    tag, major, contant, reply, context, day, key) {
+    tag, key, context, major, language, content, day, nickname, profileImage) {
+  String reply = '';
   return SingleChildScrollView(
     child: Column(
       children: [
@@ -43,7 +44,7 @@ SingleChildScrollView detailsBody(
                       ),
                       child: Center(
                         child: Text(
-                          tag,
+                          language,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 12.sp,
@@ -104,7 +105,7 @@ SingleChildScrollView detailsBody(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Text(
-                  contant,
+                  content,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 15.sp,
@@ -131,10 +132,11 @@ SingleChildScrollView detailsBody(
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Modefy(),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Modefy(),
+                      ),
+                    );
                   },
                   child: Row(
                     children: [
@@ -166,9 +168,16 @@ SingleChildScrollView detailsBody(
           padding: EdgeInsets.only(left: 30.w),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(1000),
-                child: Image.asset("assets/img/Logo.png", width: 50.w),
+              SizedBox(
+                width: 50.w,
+                height: 50.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(1000),
+                  child: Image.network(
+                    profileImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               SizedBox(width: 6.w),
               Center(
@@ -182,7 +191,7 @@ SingleChildScrollView detailsBody(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            '작성일 : 2023 / 07 / 16',
+                            '작성일 : $day',
                             style: TextStyle(
                               color: const Color(0xFF767676),
                               fontSize: 10.sp,
@@ -196,7 +205,7 @@ SingleChildScrollView detailsBody(
 
                     /// 이름
                     Text(
-                      '이재영',
+                      nickname,
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w200,

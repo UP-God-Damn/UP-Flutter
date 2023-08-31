@@ -1,26 +1,95 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:up/viewdetails/detailsappbar.dart';
 import 'package:up/viewdetails/detailsbody.dart';
+import 'package:up/url.dart';
 
-class Details extends StatelessWidget {
-  final String title, tag, major, contant, reply, day;
+import 'package:up/model/userDetails.dart';
 
-  const Details({
-    required this.title,
-    required this.tag,
-    required this.major,
-    required this.contant,
-    required this.reply,
-    required this.day,
-    required Key? key,
-  }) : super(key: key);
+class Details extends StatefulWidget {
+  final String id;
+  final int index;
+
+  const Details({required this.index, required this.id, super.key});
+
+  Future<UserDetails> getDetails() async {
+    ///URL
+    var url = userDetails + id;
+    final response = await http.get(
+      Uri.parse(url),
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      return UserDetails.fromJson(jsonDecode(
+          utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+    } else {
+      throw Exception(response.body);
+    }
+  }
 
   @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  Future<UserDetails>? getUserDetails;
+
+  ///
+  ///
+  ///
+  @override
+  void initState() {
+    super.initState();
+    getUserDetails = widget.getDetails();
+  }
+
+  ///
+  ///
+  ///
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: detailsAppbar(title, context),
-      body: detailsBody(tag, major, contant, reply, context, day, key),
+    final key = widget.key;
+
+    return FutureBuilder(
+      future: getUserDetails,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final String title = snapshot.data!.title.toString();
+          final String tag = snapshot.data!.state.toString();
+          final String nickname = snapshot.data!.userNickname.toString();
+          final String profileImage = snapshot.data!.profileImage.toString();
+          final String language = snapshot.data!.language.toString();
+          final String major = snapshot.data!.major.toString();
+          final String day = snapshot.data!.createDate.toString();
+          final String content = snapshot.data!.content.toString();
+          final String file = snapshot.data!.file.toString(); // Details 내 이미지
+
+          return Scaffold(
+            appBar: detailsAppbar(title, context),
+            body: detailsBody(
+              tag,
+              context,
+              key,
+              major,
+              language,
+              content,
+              day,
+              nickname,
+              profileImage,
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text(snapshot.hasError.toString());
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }
