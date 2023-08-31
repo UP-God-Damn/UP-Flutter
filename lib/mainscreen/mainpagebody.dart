@@ -11,16 +11,16 @@ import 'package:up/widget/majorDropdown.dart';
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/widget/mainlist.dart';
 import 'package:up/model/postMainList.dart';
+import 'package:up/url.dart';
 
 Future<PostMainList> getList() async {
-  var url =
-      'http://13.209.66.252:8080/post/search?title=&state=&major=&page=0&size=3';
+  var url = postListUrl;
   const bearer = 'Bearer';
   final response = await http.get(
     Uri.parse(url),
     headers: <String, String>{
       HttpHeaders.authorizationHeader: '$bearer '
-          'eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsanlvMm85IiwiZXhwIjoxNjkzNDUwOTYxfQ.fWPVLcYUflOn8IBtonPT2lp4kR5fxFWoXrl6qOPj21I'
+          'eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsanlvMm85IiwiZXhwIjoxNjkzNDU2NzYzfQ.hTqKbPUKhkFwmEMbp0RX9lfA7HGAaF97gLcnFywEFAw'
     },
   );
   if (response.statusCode == 200) {
