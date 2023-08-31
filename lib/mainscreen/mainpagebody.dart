@@ -136,14 +136,6 @@ class _MainPageBodyState extends State<MainPageBody> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: snapshot.data!.postResponses!.length,
                       itemBuilder: (context, index) {
-                        // "id": 2,
-                        // "userNickname": "모시깽이",
-                        // "profile": "http://up-image.s3-website.ap-northeast-2.amazonaws.com/b5362c9c-e08c-4a5d-abb4-f438ee7d88e5.jpg",
-                        // "title": "오류아좀아고쳐주세요오류우좀우고쳐주세요오류아좀우",
-                        // "state": "질문",
-                        // "major": "백엔드",
-                        // "language": "java",
-                        // "createDate": "2023 / 08 / 30"
                         final String title = snapshot
                             .data!.postResponses![index].title
                             .toString();
