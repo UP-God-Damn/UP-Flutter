@@ -12,7 +12,7 @@ import 'package:up/url.dart';
 
 Future<PostUserList> getList() async {
   ///URL
-  var url = userPost;
+  var url = '$baseUrl/post/user?page=0&size=3';
   final response = await http.get(
     Uri.parse(url),
     headers: <String, String>{HttpHeaders.authorizationHeader: 'Bearer $token'},
@@ -28,7 +28,7 @@ Future<PostUserList> getList() async {
 
 Future<UserProfile> getProfile() async {
   ///URL
-  var url = userProfile;
+  var url = '$baseUrl/user';
   final response = await http.get(
     Uri.parse(url),
     headers: <String, String>{HttpHeaders.authorizationHeader: 'Bearer $token'},

@@ -18,7 +18,7 @@ class Details extends StatefulWidget {
 
   Future<UserDetails> getDetails() async {
     ///URL
-    var url = userDetails + id;
+    final url = '$baseUrl/post/$id';
     final response = await http.get(
       Uri.parse(url),
       headers: <String, String>{
@@ -40,18 +40,12 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   Future<UserDetails>? getUserDetails;
 
-  ///
-  ///
-  ///
   @override
   void initState() {
     super.initState();
     getUserDetails = widget.getDetails();
   }
 
-  ///
-  ///
-  ///
   @override
   Widget build(BuildContext context) {
     final key = widget.key;

@@ -14,7 +14,7 @@ import 'package:up/url.dart';
 
 Future<PostMainList> getList() async {
   ///URL
-  var url = mainPost;
+  var url = '$baseUrl/post/search?title=&state=&major=&page=0&size=100000';
   const bearer = 'Bearer';
   final response = await http.get(
     Uri.parse(url),
