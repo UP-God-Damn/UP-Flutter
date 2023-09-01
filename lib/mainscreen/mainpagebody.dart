@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:up/viewdetails/detailssaffold.dart';
@@ -14,13 +15,12 @@ import 'package:up/url.dart';
 
 Future<PostMainList> getList() async {
   ///URL
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
   var url = '$baseUrl/post/search?title=&state=&major=&page=0&size=100000';
-  const bearer = 'Bearer';
   final response = await http.get(
     Uri.parse(url),
-    headers: <String, String>{
-      HttpHeaders.authorizationHeader: '$bearer $token'
-    },
+    headers: <String, String>{HttpHeaders.authorizationHeader: 'Bearer $token'},
   );
   if (response.statusCode == 200) {
     return PostMainList.fromJson(jsonDecode(

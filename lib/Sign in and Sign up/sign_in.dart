@@ -1,8 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:up/Sign in and Sign up/sign_up.dart';
 import 'package:up/mainscreen/mainpage.dart';
+import 'package:up/model/postLogin.dart';
+import 'package:up/url.dart';
+
+Future<LoginToken> postLoginToken(String id, String pw) async {
+  ///URL
+  var url = '$baseUrl/user/login';
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {'Content-Type': 'application/json'}, //필수
+    body: jsonEncode({"accountId": id, "password": pw}),
+  );
+  if (response.statusCode == 201) {
+    return LoginToken.fromJson(jsonDecode(
+        utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+  } else {
+    throw Exception(response.body);
+  }
+}
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -14,6 +36,8 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _id = TextEditingController();
   final _pw = TextEditingController();
+
+  final storage = const FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -181,11 +205,21 @@ class _SignInState extends State<SignIn> {
                       padding: EdgeInsets.only(top: 50.h),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MainPage(),
-                              ));
+                          postLoginToken(_id.text, _pw.text).then((value) {
+                            if (value.accessToken != null) {
+                              storage.write(
+                                  key: 'accessToken', value: value.accessToken);
+                              storage.write(
+                                  key: 'refreshToken',
+                                  value: value.refreshToken);
+                              print("adsfasfdsdfasd");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const MainPage(),
+                                  ));
+                            }
+                          });
                         },
                         child: Container(
                           width: 330.w,

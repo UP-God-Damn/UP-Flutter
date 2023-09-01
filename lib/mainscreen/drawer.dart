@@ -4,8 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:up/viewdetails/detailssaffold.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'package:up/viewdetails/detailssaffold.dart';
 import 'package:up/model/postUserList.dart';
 import 'package:up/model/userProfile.dart';
 import 'package:up/url.dart';
@@ -13,6 +14,8 @@ import 'package:up/url.dart';
 Future<PostUserList> getList() async {
   ///URL
   var url = '$baseUrl/post/user?page=0&size=3';
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
   final response = await http.get(
     Uri.parse(url),
     headers: <String, String>{HttpHeaders.authorizationHeader: 'Bearer $token'},
@@ -29,6 +32,8 @@ Future<PostUserList> getList() async {
 Future<UserProfile> getProfile() async {
   ///URL
   var url = '$baseUrl/user';
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
   final response = await http.get(
     Uri.parse(url),
     headers: <String, String>{HttpHeaders.authorizationHeader: 'Bearer $token'},

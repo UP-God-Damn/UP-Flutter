@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:up/viewdetails/detailsappbar.dart';
 import 'package:up/viewdetails/detailsbody.dart';
@@ -19,6 +20,8 @@ class Details extends StatefulWidget {
   Future<UserDetails> getDetails() async {
     ///URL
     final url = '$baseUrl/post/$id';
+    final storage = FlutterSecureStorage();
+    final token = await storage.read(key: 'accessToken');
     final response = await http.get(
       Uri.parse(url),
       headers: <String, String>{
