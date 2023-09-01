@@ -212,7 +212,6 @@ class _SignInState extends State<SignIn> {
                               storage.write(
                                   key: 'refreshToken',
                                   value: value.refreshToken);
-                              print("adsfasfdsdfasd");
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
