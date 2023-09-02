@@ -20,7 +20,7 @@ class Details extends StatefulWidget {
   Future<UserDetails> getDetails() async {
     ///URL
     final url = '$baseUrl/post/$id';
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'accessToken');
     final response = await http.get(
       Uri.parse(url),
@@ -51,7 +51,7 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
-    final key = widget.key;
+    final id = widget.id;
 
     return FutureBuilder(
       future: getUserDetails,
@@ -69,16 +69,16 @@ class _DetailsState extends State<Details> {
 
           return Scaffold(
             appBar: detailsAppbar(title, context),
-            body: detailsBody(
-              tag,
-              context,
-              key,
-              major,
-              language,
-              content,
-              day,
-              nickname,
-              profileImage,
+            body: DetailsBody(
+              id: id,
+              tag: tag,
+              major: major,
+              language: language,
+              content: content,
+              day: day,
+              nickname: nickname,
+              profileImage: profileImage,
+              file: file,
             ),
           );
         } else if (snapshot.hasError) {

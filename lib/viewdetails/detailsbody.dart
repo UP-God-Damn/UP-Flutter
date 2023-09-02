@@ -4,254 +4,298 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:up/reply/reply.dart';
 import 'package:up/modify/modefy.dart';
 
-SingleChildScrollView detailsBody(
-    tag, key, context, major, language, content, day, nickname, profileImage) {
-  String reply = '';
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        //
-        //
-        //
-        ///내용
-        Padding(
-          padding: EdgeInsets.fromLTRB(20.w, 31.64.h, 20.w, 9.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '내용',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'NotoSansKR',
-                ),
-              ),
-              Row(
-                children: [
-                  /// 오류,해결 태그
-                  Padding(
-                    padding: EdgeInsets.only(right: 6.w),
-                    child: Container(
-                      width: 89.w,
-                      height: 25.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(7)),
-                        border: Border.all(color: const Color(0xFFABABAB)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          language,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'NotoSansKR',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+class DetailsBody extends StatefulWidget {
+  final String id,
+      tag,
+      major,
+      language,
+      content,
+      day,
+      nickname,
+      profileImage,
+      file;
 
-                  /// 전공 태그
-                  Padding(
-                    padding: EdgeInsets.only(right: 6.w),
-                    child: Container(
-                      width: 89.w,
-                      height: 25.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(7)),
-                        border: Border.all(color: const Color(0xFFABABAB)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          major,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'NotoSansKR',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        //
-        //
-        //
-        /// 오류글 내용
-        Padding(
-          padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 7.h),
-          child: Container(
-            width: 390.w,
-            height: 490.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              border: Border.all(color: const Color(0xFFABABAB)),
-            ),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 12.h),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Text(
-                  content,
+  const DetailsBody(
+      {required this.id,
+      required this.tag,
+      required this.major,
+      required this.language,
+      required this.content,
+      required this.day,
+      required this.nickname,
+      required this.profileImage,
+      required this.file,
+      super.key});
+
+  @override
+  State<DetailsBody> createState() => _DetailsBodyState();
+}
+
+class _DetailsBodyState extends State<DetailsBody> {
+  @override
+  Widget build(BuildContext context) {
+    final id = widget.id;
+    final major = widget.major;
+    final language = widget.language;
+    final content = widget.content;
+    final day = widget.day;
+    final profileImage = widget.profileImage;
+    final nickname = widget.nickname;
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          //
+          //
+          //
+          ///내용
+          Padding(
+            padding: EdgeInsets.fromLTRB(20.w, 31.64.h, 20.w, 9.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '내용',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15.sp,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
                     fontFamily: 'NotoSansKR',
-                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Row(
+                  children: [
+                    /// 오류,해결 태그
+                    Padding(
+                      padding: EdgeInsets.only(right: 6.w),
+                      child: Container(
+                        width: 89.w,
+                        height: 25.h,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(7)),
+                          border: Border.all(color: const Color(0xFFABABAB)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            language,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'NotoSansKR',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    /// 전공 태그
+                    Padding(
+                      padding: EdgeInsets.only(right: 6.w),
+                      child: Container(
+                        width: 89.w,
+                        height: 25.h,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(7)),
+                          border: Border.all(color: const Color(0xFFABABAB)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            major,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'NotoSansKR',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          //
+          //
+          //
+          /// 오류글 내용
+          Padding(
+            padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 7.h),
+            child: Container(
+              width: 390.w,
+              height: 490.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(color: const Color(0xFFABABAB)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 12.h),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Text(
+                    content,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15.sp,
+                      fontFamily: 'NotoSansKR',
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        //
-        //
-        //
-        /// 수정, 삭제
-        Padding(
-          padding: EdgeInsets.only(right: 31.w, bottom: 6.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              /// 수정
-              Padding(
-                padding: EdgeInsets.only(right: 18.w),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Modefy(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(Icons.mode, color: Color(0xFF767676)),
-                      SizedBox(width: 4.w),
-                      const Text('수정',
-                          style: TextStyle(color: Color(0xFF767676))),
-                    ],
-                  ),
-                ),
-              ),
-
-              /// 삭제
-              Row(
-                children: [
-                  const Icon(Icons.delete, color: Colors.red),
-                  SizedBox(width: 4.w),
-                  const Text('삭제', style: TextStyle(color: Colors.red))
-                ],
-              ),
-            ],
-          ),
-        ),
-        //
-        //
-        //
-        /// 프로필, 작성일
-        Padding(
-          padding: EdgeInsets.only(left: 30.w),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 50.w,
-                height: 50.h,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(1000),
-                  child: Image.network(
-                    profileImage,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(width: 6.w),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ///작성일
-                    Padding(
-                      padding: EdgeInsets.only(right: 20.w, top: 4.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            '작성일 : $day',
-                            style: TextStyle(
-                              color: const Color(0xFF767676),
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w200,
-                              fontFamily: 'NotoSansKR',
-                            ),
-                          )
-                        ],
-                      ),
+          //
+          //
+          //
+          /// 수정, 삭제
+          Padding(
+            padding: EdgeInsets.only(right: 31.w, bottom: 6.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                /// 수정
+                Padding(
+                  padding: EdgeInsets.only(right: 18.w),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Modefy(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(Icons.mode, color: Color(0xFF767676)),
+                        SizedBox(width: 4.w),
+                        const Text('수정',
+                            style: TextStyle(color: Color(0xFF767676))),
+                      ],
                     ),
+                  ),
+                ),
 
-                    /// 이름
-                    Text(
-                      nickname,
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w200,
-                        fontFamily: 'NotoSansKR',
-                      ),
-                    )
+                /// 삭제
+                Row(
+                  children: [
+                    const Icon(Icons.delete, color: Colors.red),
+                    SizedBox(width: 4.w),
+                    const Text('삭제', style: TextStyle(color: Colors.red))
                   ],
                 ),
-              )
-            ],
+              ],
+            ),
           ),
-        ),
-        //
-        //
-        //
-        /// 댓글 보러가기
-        Padding(
-          padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 10.h),
-          child: Container(width: 390.w, height: 1.h, color: Colors.black),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        CommentDetails(reply: reply, key: key)));
-          },
-          child: Row(
-            children: [
-              /// 댓글보러가기
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, right: 5.w),
-                child: Text(
-                  '댓글 보러가기  >',
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'NotoSansKR',
+          //
+          //
+          //
+          /// 프로필, 작성일
+          Padding(
+            padding: EdgeInsets.only(left: 30.w),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 50.w,
+                  height: 50.h,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(1000),
+                    child: Image.network(
+                      profileImage,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(width: 6.w),
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///작성일
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.w, top: 4.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '작성일 : $day',
+                              style: TextStyle(
+                                color: const Color(0xFF767676),
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w200,
+                                fontFamily: 'NotoSansKR',
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+
+                      /// 이름
+                      Text(
+                        nickname,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w200,
+                          fontFamily: 'NotoSansKR',
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+          //
+          //
+          //
+          /// 댓글 보러가기
+          Padding(
+            padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 10.h),
+            child: Container(width: 390.w, height: 1.h, color: Colors.black),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CommentDetails(id: id),
+                ),
+              );
+
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => CommentDetails(id: id),
+              //   ),
+              // );
+            },
+            child: Row(
+              children: [
+                /// 댓글보러가기
+                Padding(
+                  padding: EdgeInsets.only(left: 30.w, right: 5.w),
+                  child: Text(
+                    '댓글 보러가기  >',
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'NotoSansKR',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
