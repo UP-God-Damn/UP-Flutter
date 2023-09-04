@@ -18,6 +18,7 @@ Future<LoginToken> postLoginToken(String id, String pw) async {
     headers: {'Content-Type': 'application/json'}, //필수
     body: jsonEncode({"accountId": id, "password": pw}),
   );
+
   if (response.statusCode == 201) {
     return LoginToken.fromJson(jsonDecode(
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
@@ -46,8 +47,14 @@ class _SignInState extends State<SignIn> {
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
           child: Column(
             children: [
               Padding(
@@ -80,11 +87,14 @@ class _SignInState extends State<SignIn> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 91.h),
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     decoration: const BoxDecoration(
                       color: Color(0xFFF3F3F3),
                       borderRadius:
-                          BorderRadius.only(topLeft: Radius.circular(80)),
+                      BorderRadius.only(topLeft: Radius.circular(80)),
                     ),
                     child: Column(
                       children: [
@@ -108,6 +118,7 @@ class _SignInState extends State<SignIn> {
                           padding: EdgeInsets.only(top: 51.h),
                           child: Column(
                             children: [
+
                               /// 아이디 제목
                               Row(
                                 children: [
@@ -134,7 +145,7 @@ class _SignInState extends State<SignIn> {
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 16.w),
@@ -185,7 +196,7 @@ class _SignInState extends State<SignIn> {
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 16.w),
@@ -217,6 +228,8 @@ class _SignInState extends State<SignIn> {
                                   storage.write(
                                       key: 'refreshToken',
                                       value: value.refreshToken);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, '/', (_) => false);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -231,7 +244,7 @@ class _SignInState extends State<SignIn> {
                               decoration: const BoxDecoration(
                                 color: Color(0xFF191C1B),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                BorderRadius.all(Radius.circular(10)),
                               ),
                               child: Center(
                                 child: Text(
