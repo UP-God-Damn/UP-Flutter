@@ -84,7 +84,7 @@ class _DetailsState extends State<Details> {
         } else if (snapshot.hasError) {
           return Text(snapshot.hasError.toString());
         } else {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
