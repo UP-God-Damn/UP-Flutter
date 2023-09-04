@@ -13,7 +13,7 @@ import 'package:up/url.dart';
 
 Future<PostUserList> getList() async {
   ///URL
-  var url = '$baseUrl/post/user?page=0&size=3';
+  var url = '$baseUrl/post/user?page=0&size=100';
   final storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
   final response = await http.get(
