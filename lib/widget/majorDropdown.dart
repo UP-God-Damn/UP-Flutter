@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import 'package:up/provider/error_provider.dart';
 
 class MajorDropdown extends StatefulWidget {
   const MajorDropdown({super.key});
@@ -10,44 +13,45 @@ class MajorDropdown extends StatefulWidget {
 }
 
 class _MajorDropdownState extends State<MajorDropdown> {
-  final List<String> major = ['프론트엔드', '백엔드', 'AOS', 'IOS', 'Flutter', '임베디드'];
-  String? selectedValue;
+  //BACKEND(백엔드), FRONTEND(프론트), ANDROID(안드로이드), FLUTTER(플러터), IOS, DEVOPS, EMBEDDED(임베디드)
+
+  final List<String> major = [
+    'FRONTEND',
+    'BACKEND',
+    'AOS',
+    'IOS',
+    'FLUTTER',
+    'DEVOPS',
+    'EMBEDDED',
+  ];
 
   @override
   Widget build(BuildContext context) {
+    var majorController = Provider.of<MajorController>(context);
+
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
         iconStyleData: IconStyleData(iconSize: 15.w),
-        hint: Text(
-          //hintText
-          '전공',
-          style: TextStyle(
-            fontFamily: 'NotoSansKR',
-            fontSize: 10.sp,
-            color: Theme.of(context).hintColor,
-          ),
-        ),
         items: major
             .map((String item) => DropdownMenuItem<String>(
                   value: item,
-                  child: Text(
-                    item,
-                    style: TextStyle(
-                      fontSize: 10.sp,
+                  child: Center(
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                      ),
                     ),
                   ),
                 ))
             .toList(),
-        value: selectedValue,
-        onChanged: (String? value) {
-          setState(() {
-            selectedValue = value;
-            print(value);
-          });
+        value: majorController.majorState,
+        onChanged: (dynamic value) {
+          majorController.majorCategory(value);
         },
-        buttonStyleData: const ButtonStyleData(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        buttonStyleData: ButtonStyleData(
+          padding: EdgeInsets.only(right: 10.w),
           height: 40,
           width: 140,
         ),
