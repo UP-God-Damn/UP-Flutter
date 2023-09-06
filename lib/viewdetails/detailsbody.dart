@@ -41,6 +41,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     final day = widget.day;
     final profileImage = widget.profileImage;
     final nickname = widget.nickname;
+    final file = widget.file;
 
     return SingleChildScrollView(
       child: Column(
@@ -139,14 +140,21 @@ class _DetailsBodyState extends State<DetailsBody> {
                 padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 12.h),
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  child: Text(
-                    content,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15.sp,
-                      fontFamily: 'NotoSansKR',
-                      fontWeight: FontWeight.w500,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        content,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15.sp,
+                          fontFamily: 'NotoSansKR',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      file == 'null' ? const Text('') : Image.network(file),
+                    ],
                   ),
                 ),
               ),
