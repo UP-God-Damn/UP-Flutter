@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'Sign in and Sign up/choose.dart';
 import 'provider/error_provider.dart';
+import 'package:up/provider/comment_provider.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -24,13 +26,14 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ErrorController()),
         ChangeNotifierProvider(create: (context) => MajorController()),
+        ChangeNotifierProvider(create: (context) => CommentController()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(430, 932),
         builder: (context, child) {
-          return MaterialApp(
+          return const MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const SafeArea(child: Choose()),
+            home: SafeArea(child: Choose()),
           );
         },
       ),
