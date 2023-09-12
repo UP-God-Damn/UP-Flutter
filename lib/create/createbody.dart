@@ -7,16 +7,18 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:up/url.dart';
 
 import 'package:up/mainscreen/mainpage.dart';
+import 'package:up/model/createId.dart';
 
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/provider/error_provider.dart';
 import 'package:up/widget/majorDropdown.dart';
 
-void postCreate(String title, String language, String content,
+Future<CreateId> postCreate(String title, String language, String content,
     String selectedState, String major) async {
   const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
@@ -42,7 +44,8 @@ void postCreate(String title, String language, String content,
   );
 
   if (response.statusCode == 201) {
-    print('성공');
+    return CreateId.fromJson(jsonDecode(
+        utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
   } else {
     throw Exception(response.body);
   }
@@ -56,6 +59,8 @@ class CreateBody extends StatefulWidget {
 }
 
 class _CreateBodyState extends State<CreateBody> {
+  Future<CreateId>? getId;
+
   final titleController = TextEditingController();
   final contentController = TextEditingController();
   final languageController = TextEditingController();
@@ -365,7 +370,15 @@ class _CreateBodyState extends State<CreateBody> {
                 contentController.text,
                 errorController.issueState, //selectedState.toString(),
                 majorController.majorState, //selectedMajor.toString(),
-              );
+              ).then((value) {
+                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MainPage(),
+                  ),
+                );
+              });
               Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
               Navigator.push(
                   context,
