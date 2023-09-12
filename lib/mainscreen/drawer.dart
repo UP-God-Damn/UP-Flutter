@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:up/viewdetails/detailssaffold.dart';
 import 'package:up/model/postUserList.dart';
@@ -14,7 +16,7 @@ import 'package:up/url.dart';
 Future<PostUserList> getList() async {
   ///URL
   var url = '$baseUrl/post/user?page=0&size=100';
-  final storage = FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
   final response = await http.get(
     Uri.parse(url),
@@ -32,7 +34,7 @@ Future<PostUserList> getList() async {
 Future<UserProfile> getProfile() async {
   ///URL
   var url = '$baseUrl/user';
-  final storage = FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
   final response = await http.get(
     Uri.parse(url),
@@ -43,6 +45,38 @@ Future<UserProfile> getProfile() async {
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
   } else {
     throw Exception(response.body);
+  }
+}
+
+void postImage(image, String accountId) async {
+  Dio dio = Dio();
+  const storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
+
+  dio.options.contentType = 'multipart/form-data';
+  dio.options.headers["Authorization"] = "Bearer $token";
+
+  String imagePath = image.path;
+
+  print('${image.path}------$accountId');
+
+  String url = "$baseUrl/user/profileImage/$accountId";
+
+  try {
+    FormData formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(imagePath),
+    });
+
+    Response response = await dio.post(url, data: formData);
+
+    if (response.statusCode == 201) {
+      print('이미지 업로드 성공');
+      print('서버 응답: ${response.data}');
+    } else {
+      print('이미지 업로드 실패 ${response.data}');
+    }
+  } catch (e) {
+    print('오류 발생: $e');
   }
 }
 
@@ -57,6 +91,9 @@ class _MainDrawerState extends State<MainDrawer> {
   Future<PostUserList>? userList;
   Future<UserProfile>? userProfile;
 
+  XFile? image;
+  final ImagePicker picker = ImagePicker();
+
   @override
   void initState() {
     userProfile = getProfile();
@@ -68,6 +105,14 @@ class _MainDrawerState extends State<MainDrawer> {
   @override
   Widget build(BuildContext context) {
     final key = widget.key;
+
+    Future<void> getImage(ImageSource imageSource) async {
+      final pickedFile =
+          await picker.pickImage(source: imageSource, imageQuality: 100);
+      setState(() {
+        image = XFile(pickedFile!.path);
+      });
+    }
 
     return Drawer(
       backgroundColor: const Color(0xFFE8E8E8),
@@ -96,14 +141,20 @@ class _MainDrawerState extends State<MainDrawer> {
                             /// 프로필 사진
                             Padding(
                               padding: EdgeInsets.only(top: 110.h, left: 27.w),
-                              child: SizedBox(
-                                width: 72.w,
-                                height: 72.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100000),
-                                  child: Image.network(
-                                    userImage,
-                                    fit: BoxFit.cover,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  await getImage(ImageSource.gallery);
+                                  postImage(image, userId);
+                                },
+                                child: SizedBox(
+                                  width: 72.w,
+                                  height: 72.w,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100000),
+                                    child: Image.network(
+                                      userImage,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
