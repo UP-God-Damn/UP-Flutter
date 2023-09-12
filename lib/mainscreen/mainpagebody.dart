@@ -15,7 +15,7 @@ import 'package:up/url.dart';
 
 Future<PostMainList> getList() async {
   ///URL
-  final storage = FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
   var url = '$baseUrl/post/search?title=&state=&major=&page=0&size=100000';
   final response = await http.get(
@@ -283,14 +283,19 @@ class _MainPageBodyState extends State<MainPageBody> {
                                         Padding(
                                           padding: EdgeInsets.only(
                                               left: 17.w, top: 8.w),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                Checkbox.width),
-                                            child: Image.network(
-                                              image,
-                                              width: 17.w,
-                                              height: 17.h,
-                                              fit: BoxFit.cover,
+                                          child: SizedBox(
+                                            width: 20.w,
+                                            height: 20.h,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Checkbox.width),
+                                              child: Image.network(
+                                                image,
+                                                width: 17.w,
+                                                height: 17.h,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
