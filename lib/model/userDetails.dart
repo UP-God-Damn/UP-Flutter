@@ -1,5 +1,6 @@
 class UserDetails {
   int? id;
+  String? accountId;
   String? userNickname;
   String? profileImage;
   String? title;
@@ -13,6 +14,7 @@ class UserDetails {
 
   UserDetails(
       {this.id,
+      this.accountId,
       this.userNickname,
       this.profileImage,
       this.title,
@@ -26,6 +28,7 @@ class UserDetails {
 
   UserDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    accountId = json['accountId'];
     userNickname = json['userNickname'];
     profileImage = json['profileImage'];
     title = json['title'];
@@ -46,6 +49,7 @@ class UserDetails {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['accountId'] = accountId;
     data['userNickname'] = userNickname;
     data['profileImage'] = profileImage;
     data['title'] = title;
