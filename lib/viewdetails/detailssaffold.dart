@@ -65,6 +65,7 @@ class _DetailsState extends State<Details> {
           final String major = snapshot.data!.major.toString();
           final String day = snapshot.data!.createDate.toString();
           final String content = snapshot.data!.content.toString();
+          final String userId = snapshot.data!.accountId.toString();
           final String file = snapshot.data!.file.toString(); // Details 내 이미지
 
           return Scaffold(
@@ -79,6 +80,7 @@ class _DetailsState extends State<Details> {
               nickname: nickname,
               profileImage: profileImage,
               file: file,
+              userId: userId,
             ),
           );
         } else if (snapshot.hasError) {

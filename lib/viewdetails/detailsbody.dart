@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:up/provider/userId_provider.dart';
 
 import 'package:up/reply/reply.dart';
 import 'package:up/modify/modefy.dart';
 
 class DetailsBody extends StatefulWidget {
-  final String id,
-      tag,
-      major,
-      language,
-      content,
-      day,
-      nickname,
-      profileImage,
-      file;
+  final String id, tag, major, language, userId;
+  final String content, day, nickname, profileImage, file;
 
   const DetailsBody(
       {required this.id,
@@ -25,6 +20,7 @@ class DetailsBody extends StatefulWidget {
       required this.nickname,
       required this.profileImage,
       required this.file,
+      required this.userId,
       super.key});
 
   @override
@@ -42,6 +38,9 @@ class _DetailsBodyState extends State<DetailsBody> {
     final profileImage = widget.profileImage;
     final nickname = widget.nickname;
     final file = widget.file;
+    final userId = widget.userId;
+
+    var userIdController = Provider.of<UserIdControllder>(context);
 
     return SingleChildScrollView(
       child: Column(
@@ -170,36 +169,40 @@ class _DetailsBodyState extends State<DetailsBody> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 /// 수정
-                Padding(
-                  padding: EdgeInsets.only(right: 18.w),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Modefy(),
+                userId == userIdController.userid
+                    ? Padding(
+                        padding: EdgeInsets.only(right: 18.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Modefy(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(Icons.mode, color: Color(0xFF767676)),
+                              SizedBox(width: 4.w),
+                              const Text('수정',
+                                  style: TextStyle(color: Color(0xFF767676))),
+                            ],
+                          ),
                         ),
-                      );
-                    },
-                    child: Row(
-                      children: [
-                        const Icon(Icons.mode, color: Color(0xFF767676)),
-                        SizedBox(width: 4.w),
-                        const Text('수정',
-                            style: TextStyle(color: Color(0xFF767676))),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : const SizedBox(),
 
                 /// 삭제
-                Row(
-                  children: [
-                    const Icon(Icons.delete, color: Colors.red),
-                    SizedBox(width: 4.w),
-                    const Text('삭제', style: TextStyle(color: Colors.red))
-                  ],
-                ),
+                userId == userIdController.userid
+                    ? Row(
+                        children: [
+                          const Icon(Icons.delete, color: Colors.red),
+                          SizedBox(width: 4.w),
+                          const Text('삭제', style: TextStyle(color: Colors.red))
+                        ],
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

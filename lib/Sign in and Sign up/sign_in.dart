@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 import 'package:up/Sign in and Sign up/sign_up.dart';
 import 'package:up/mainscreen/mainpage.dart';
 import 'package:up/model/postLogin.dart';
+import 'package:up/provider/userId_provider.dart';
 import 'package:up/url.dart';
 
 Future<LoginToken> postLoginToken(String id, String pw) async {
@@ -42,19 +44,15 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    var userIdController = Provider.of<UserIdControllder>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFF191C1B),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SizedBox(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               Padding(
@@ -87,14 +85,11 @@ class _SignInState extends State<SignIn> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 91.h),
                   child: Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                       color: Color(0xFFF3F3F3),
                       borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(80)),
+                          BorderRadius.only(topLeft: Radius.circular(80)),
                     ),
                     child: Column(
                       children: [
@@ -118,7 +113,6 @@ class _SignInState extends State<SignIn> {
                           padding: EdgeInsets.only(top: 51.h),
                           child: Column(
                             children: [
-
                               /// 아이디 제목
                               Row(
                                 children: [
@@ -145,7 +139,7 @@ class _SignInState extends State<SignIn> {
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 16.w),
@@ -196,7 +190,7 @@ class _SignInState extends State<SignIn> {
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 16.w),
@@ -228,6 +222,7 @@ class _SignInState extends State<SignIn> {
                                   storage.write(
                                       key: 'refreshToken',
                                       value: value.refreshToken);
+                                  userIdController.getUserId(_id.text);
                                   Navigator.pushNamedAndRemoveUntil(
                                       context, '/', (_) => false);
                                   Navigator.push(
@@ -244,7 +239,7 @@ class _SignInState extends State<SignIn> {
                               decoration: const BoxDecoration(
                                 color: Color(0xFF191C1B),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                               ),
                               child: Center(
                                 child: Text(
