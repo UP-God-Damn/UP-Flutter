@@ -223,13 +223,11 @@ class _SignInState extends State<SignIn> {
                                       key: 'refreshToken',
                                       value: value.refreshToken);
                                   userIdController.getUserId(_id.text);
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/', (_) => false);
-                                  Navigator.push(
-                                      context,
+                                  Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
-                                        builder: (context) => const MainPage(),
-                                      ));
+                                          builder: (context) =>
+                                              const MainPage()),
+                                      (route) => false);
                                 }
                               });
                             },

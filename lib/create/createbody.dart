@@ -363,28 +363,18 @@ class _CreateBodyState extends State<CreateBody> {
           //
           /// 글 올리기 Button
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               postCreate(
                 titleController.text,
                 languageController.text,
                 contentController.text,
-                errorController.issueState, //selectedState.toString(),
-                majorController.majorState, //selectedMajor.toString(),
+                errorController.issueState,
+                majorController.majorState,
               ).then((value) {
-                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MainPage(),
-                  ),
-                );
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const MainPage()),
+                    (route) => false);
               });
-              Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MainPage(),
-                  ));
             },
             child: Container(
               width: 330.w,
