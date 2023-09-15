@@ -242,8 +242,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     padding: EdgeInsets.zero,
                     itemCount: snapshot.data!.postResponses!.length,
                     itemBuilder: (context, index) {
-                      final String id =
-                          snapshot.data!.postResponses![index].id.toString();
+                      final int id =
+                          snapshot.data!.postResponses![index].id!.toInt();
                       final String title =
                           snapshot.data!.postResponses![index].title.toString();
                       final String tag =

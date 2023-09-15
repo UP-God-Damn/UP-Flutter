@@ -33,7 +33,8 @@ Future delPost(String id) async {
 }
 
 class DetailsBody extends StatefulWidget {
-  final String id, tag, major, language, userId;
+  final int id;
+  final String tag, major, language, userId;
   final String content, day, nickname, profileImage, file;
 
   const DetailsBody(

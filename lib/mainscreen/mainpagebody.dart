@@ -157,8 +157,8 @@ class _MainPageBodyState extends State<MainPageBody> {
                         final String image = snapshot
                             .data!.postResponses![index].profile
                             .toString();
-                        final String id =
-                            snapshot.data!.postResponses![index].id.toString();
+                        final int id =
+                            snapshot.data!.postResponses![index].id!.toInt();
 
                         return Padding(
                           padding: EdgeInsets.only(

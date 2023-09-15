@@ -12,7 +12,7 @@ import 'package:up/url.dart';
 import 'package:up/model/userDetails.dart';
 
 class Details extends StatefulWidget {
-  final String id;
+  final int id;
   final int index;
 
   const Details({required this.index, required this.id, super.key});
