@@ -1,10 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:up/provider/userId_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:up/mainscreen/mainpage.dart';
 
+import 'package:up/provider/userId_provider.dart';
 import 'package:up/reply/reply.dart';
 import 'package:up/modify/modefy.dart';
+import 'package:up/url.dart';
+
+Future delPost(String id) async {
+  final url = '$baseUrl/post/$id';
+  const storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
+
+  final response = await http.delete(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+    },
+  );
+
+  if (response.statusCode != 204) {
+    throw Exception(response.body);
+  }
+}
 
 class DetailsBody extends StatefulWidget {
   final String id, tag, major, language, userId;
@@ -195,12 +219,51 @@ class _DetailsBodyState extends State<DetailsBody> {
 
                 /// 삭제
                 userId == userIdController.userid
-                    ? Row(
-                        children: [
-                          const Icon(Icons.delete, color: Colors.red),
-                          SizedBox(width: 4.w),
-                          const Text('삭제', style: TextStyle(color: Colors.red))
-                        ],
+                    ? GestureDetector(
+                        onTap: () async {
+                          delPost(id.toString());
+
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Column(
+                                  children: [
+                                    Text('알림'),
+                                  ],
+                                ),
+                                content: const Text('삭제가 완료 되었습니다.'),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('확인'),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/', (_) => false);
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainPage(),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(Icons.delete, color: Colors.red),
+                            SizedBox(width: 4.w),
+                            const Text('삭제',
+                                style: TextStyle(color: Colors.red))
+                          ],
+                        ),
                       )
                     : const SizedBox(),
               ],
