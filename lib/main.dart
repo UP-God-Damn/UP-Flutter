@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:up/provider/post_id_provider.dart';
 import 'package:up/provider/userId_provider.dart';
 
 import 'Sign in and Sign up/choose.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => MajorController()),
         ChangeNotifierProvider(create: (context) => CommentController()),
         ChangeNotifierProvider(create: (context) => UserIdControllder()),
+        ChangeNotifierProvider(create: (context) => PostIdController()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(430, 932),

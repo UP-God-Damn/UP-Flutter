@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:up/provider/post_id_provider.dart';
 import 'package:up/url.dart';
 
 import 'package:up/mainscreen/mainpage.dart';
@@ -25,8 +26,6 @@ Future<CreateId> postCreate(String title, String language, String content,
 
   var url = '$baseUrl/post';
   var state = selectedState == '오류' ? 'QUESTION' : 'SOLUTION';
-
-  print('----------$state----------');
 
   final response = await http.post(
     Uri.parse(url),
@@ -69,6 +68,8 @@ class _CreateBodyState extends State<CreateBody> {
   Widget build(BuildContext context) {
     XFile? image;
     final ImagePicker picker = ImagePicker();
+
+    var postIdController = Provider.of<PostIdController>(context);
 
     Future<void> getImage(ImageSource imageSource) async {
       final pickedFile =
@@ -364,17 +365,20 @@ class _CreateBodyState extends State<CreateBody> {
           /// 글 올리기 Button
           GestureDetector(
             onTap: () async {
-              postCreate(
+              postIdController.addPostId(
                 titleController.text,
                 languageController.text,
                 contentController.text,
                 errorController.issueState,
                 majorController.majorState,
-              ).then((value) {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const MainPage()),
-                    (route) => false);
-              });
+              );
+              print(postIdController.postId.toString());
+
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const MainPage(),
+                  ),
+                  (route) => false);
             },
             child: Container(
               width: 330.w,
