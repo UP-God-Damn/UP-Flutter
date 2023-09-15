@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -244,11 +246,8 @@ class _DetailsBodyState extends State<DetailsBody> {
                               );
                             },
                           );
-
-                          // ignore: use_build_context_synchronously
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/', (_) => false);
-                          // ignore: use_build_context_synchronously
                           Navigator.push(
                             context,
                             MaterialPageRoute(
