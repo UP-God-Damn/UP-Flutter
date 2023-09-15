@@ -9,14 +9,33 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:up/model/userDetails.dart';
+
 import 'package:up/url.dart';
 
 enum SampleItem { modify, del }
 
-Future postComment(id, comment) async {
-  final url = '$baseUrl/comment';
+Future delPost(id) async {
+  final url = '$baseUrl/post/$id';
+
   const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
+
+  var response = await http.delete(Uri.parse(url), headers: {
+    'Content-Type': 'application/json',
+    HttpHeaders.authorizationHeader: 'Bearer $token'
+  });
+
+  if (response.statusCode != 204) {
+    throw Exception(jsonDecode(utf8.decode(response.bodyBytes)));
+  }
+}
+
+Future postComment(id, comment) async {
+  final url = '$baseUrl/comment';
+
+  const storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
+
   final response = await http.post(
     Uri.parse(url),
     headers: {
@@ -35,7 +54,7 @@ Future postComment(id, comment) async {
 }
 
 class CommentDetails extends StatefulWidget {
-  final String id;
+  final int id;
 
   const CommentDetails({required this.id, super.key});
 
@@ -51,8 +70,7 @@ class CommentDetails extends StatefulWidget {
       },
     );
     if (response.statusCode == 200) {
-      return UserDetails.fromJson(jsonDecode(
-          utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+      return UserDetails.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception(response.body);
     }
@@ -74,7 +92,7 @@ class _CommentDetailsState extends State<CommentDetails> {
   @override
   Widget build(BuildContext context) {
     final commentTextController = TextEditingController();
-    SampleItem? selectedMenu;
+    //SampleItem? selectedMenu;
 
     final id = widget.id;
 
@@ -118,6 +136,9 @@ class _CommentDetailsState extends State<CommentDetails> {
                       child: ListView.builder(
                         itemCount: snapshot.data!.comments!.length,
                         itemBuilder: (context, index) {
+                          final String id =
+                              snapshot.data!.comments![index].id.toString();
+
                           final String userProfile = snapshot
                               .data!.comments![index].profileImage
                               .toString();
@@ -228,10 +249,35 @@ class _CommentDetailsState extends State<CommentDetails> {
                                             List<MenuItemButton>.generate(
                                           2,
                                           (int index) => MenuItemButton(
-                                            onPressed: () {
-                                              setState(() => selectedMenu =
-                                                  SampleItem.values[index]);
+                                            onPressed: () async {
+                                              // setState(() => selectedMenu =
+                                              //     SampleItem.values[index]);
                                               print(index);
+                                              if (index == 1) {
+                                                delPost(id);
+                                                //
+                                                await showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          '댓글이 삭제 되었습니다.'),
+                                                      actions: [
+                                                        MaterialButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child:
+                                                              const Text('확인'),
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                                //
+                                                Navigator.pop(context);
+                                              }
                                             },
                                             child: Text(
                                               index == 0 ? '수정' : '삭제',
@@ -320,7 +366,13 @@ class _CommentDetailsState extends State<CommentDetails> {
                                     },
                                   );
                                 } else {
+                                  // commentIdController.addCommentId(
+                                  //   id,
+                                  //   commentTextController.text,
+                                  // );
+
                                   postComment(id, commentTextController.text);
+
                                   await showDialog(
                                     context: context,
                                     builder: (context) {
@@ -337,6 +389,7 @@ class _CommentDetailsState extends State<CommentDetails> {
                                       );
                                     },
                                   );
+                                  //
                                   Navigator.pop(context);
                                 }
                               },
