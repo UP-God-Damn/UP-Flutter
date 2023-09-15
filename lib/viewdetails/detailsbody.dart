@@ -247,14 +247,11 @@ class _DetailsBodyState extends State<DetailsBody> {
                               );
                             },
                           );
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/', (_) => false);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MainPage(),
-                            ),
-                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const MainPage(),
+                              ),
+                              (route) => false);
                         },
                         child: Row(
                           children: [
