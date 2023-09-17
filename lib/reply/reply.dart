@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:up/model/userDetails.dart';
+import 'package:up/modify/comment_modefy.dart';
 
 import 'package:up/url.dart';
 
@@ -248,12 +249,12 @@ class _CommentDetailsState extends State<CommentDetails> {
                                         menuChildren:
                                             List<MenuItemButton>.generate(
                                           2,
-                                          (int index) => MenuItemButton(
+                                          (int i) => MenuItemButton(
                                             onPressed: () async {
                                               // setState(() => selectedMenu =
                                               //     SampleItem.values[index]);
-                                              print(index);
-                                              if (index == 1) {
+                                              print(i);
+                                              if (i == 1) {
                                                 delPost(id);
                                                 //
                                                 await showDialog(
@@ -277,10 +278,32 @@ class _CommentDetailsState extends State<CommentDetails> {
                                                 );
                                                 //
                                                 Navigator.pop(context);
+                                              } else if (i == 0) {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CommentModeFy(
+                                                      commentTextId: snapshot
+                                                          .data!
+                                                          .comments![index]
+                                                          .id
+                                                          .toString(),
+                                                      //
+                                                      id: snapshot.data!.id!
+                                                          .toInt(),
+                                                      content: snapshot
+                                                          .data!
+                                                          .comments![index]
+                                                          .content
+                                                          .toString(),
+                                                    ),
+                                                  ),
+                                                );
                                               }
                                             },
                                             child: Text(
-                                              index == 0 ? '수정' : '삭제',
+                                              i == 0 ? '수정' : '삭제',
                                             ),
                                           ),
                                         ),
