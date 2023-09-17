@@ -170,7 +170,6 @@ class _MainPageBodyState extends State<MainPageBody> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Details(
-                                    index: index,
                                     id: id,
                                     key: key,
                                   ),

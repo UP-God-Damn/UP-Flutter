@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -255,7 +257,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Details(
-                                index: index,
                                 id: id,
                                 key: key,
                               ),

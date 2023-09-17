@@ -13,9 +13,8 @@ import 'package:up/model/userDetails.dart';
 
 class Details extends StatefulWidget {
   final int id;
-  final int index;
 
-  const Details({required this.index, required this.id, super.key});
+  const Details({required this.id, super.key});
 
   Future<UserDetails> getDetails() async {
     ///URL
