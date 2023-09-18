@@ -28,7 +28,7 @@ class Modefy extends StatelessWidget {
           },
         ),
         title: Text(
-          '오류/해결 글쓰기',
+          '글 수정하기',
           style: TextStyle(
             fontFamily: 'NotoSansKR',
             color: Colors.black,
