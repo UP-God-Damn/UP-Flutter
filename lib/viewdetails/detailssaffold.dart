@@ -80,6 +80,7 @@ class _DetailsState extends State<Details> {
               profileImage: profileImage,
               file: file,
               userId: userId,
+              title: title,
             ),
           );
         } else if (snapshot.hasError) {

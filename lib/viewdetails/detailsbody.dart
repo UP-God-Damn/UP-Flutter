@@ -34,7 +34,7 @@ Future delPost(String id) async {
 
 class DetailsBody extends StatefulWidget {
   final int id;
-  final String tag, major, language, userId;
+  final String tag, major, language, userId, title;
   final String content, day, nickname, profileImage, file;
 
   const DetailsBody(
@@ -48,6 +48,7 @@ class DetailsBody extends StatefulWidget {
       required this.profileImage,
       required this.file,
       required this.userId,
+      required this.title,
       super.key});
 
   @override
@@ -66,6 +67,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     final nickname = widget.nickname;
     final file = widget.file;
     final userId = widget.userId;
+    final title = widget.title;
 
     var userIdController = Provider.of<UserIdControllder>(context);
 
@@ -204,7 +206,12 @@ class _DetailsBodyState extends State<DetailsBody> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Modefy(),
+                                builder: (context) => Modefy(
+                                  id: id,
+                                  cotent: content,
+                                  language: language,
+                                  title: title,
+                                ),
                               ),
                             );
                           },

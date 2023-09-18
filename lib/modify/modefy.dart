@@ -1,17 +1,69 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'package:provider/provider.dart';
+import 'package:up/provider/error_provider.dart';
+
+import 'package:up/url.dart';
+import 'package:up/viewdetails/detailssaffold.dart';
 
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/widget/majorDropdown.dart';
 
+Future postModefy(int id, String title, String language, String content,
+    String selectedState, String major) async {
+  const storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
+
+  var url = '$baseUrl/post/$id';
+  var state = selectedState == '오류' ? 'QUESTION' : 'SOLUTION';
+
+  final response = await http.patch(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+    },
+    body: jsonEncode({
+      "title": title,
+      "content": content,
+      "language": language,
+      "state": state,
+      "major": major,
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception(response.body);
+  }
+}
+
 class Modefy extends StatelessWidget {
-  const Modefy({super.key});
+  final int id;
+  final String title, cotent, language;
+
+  const Modefy(
+      {required this.id,
+      required this.title,
+      required this.cotent,
+      required this.language,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
-    final titleController = TextEditingController();
-    final contentController = TextEditingController();
-    final languageController = TextEditingController();
+    final titleController = TextEditingController(text: title);
+    final contentController = TextEditingController(text: cotent);
+    final languageController = TextEditingController(text: language);
+
+    var errorController = Provider.of<ErrorController>(context, listen: false);
+    var majorController = Provider.of<MajorController>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,18 +116,20 @@ class Modefy extends StatelessWidget {
                             const BorderRadius.all(Radius.circular(7)),
                         border: Border.all(color: const Color(0xFFABABAB)),
                       ),
+
+                      /// 오류 / 해결 드롭다운
                       child: const ErrorDropdown(),
                     ),
                   ),
                   Container(
-                    width: 89.w,
+                    width: 110.w,
                     height: 25.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: const BorderRadius.all(Radius.circular(7)),
                       border: Border.all(color: const Color(0xFFABABAB)),
                     ),
-                    child: const MajorDropdown(),
+                    child: const Center(child: MajorDropdown()),
                   ),
                 ],
               ),
@@ -227,7 +281,7 @@ class Modefy extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 10.h),
               child: Container(
                 width: 390.w,
-                height: 320.h,
+                height: 460.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -249,54 +303,43 @@ class Modefy extends StatelessWidget {
                 ),
               ),
             ),
-            //
-            //
-            //
-            /// 사진(제목)
-            Padding(
-              padding: EdgeInsets.only(left: 28.w, bottom: 5.h),
-              child: Row(
-                children: [
-                  Text(
-                    '사진',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'NotoSansKR',
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //
-            //
-            //
-            /// 사진 더하기
-            Padding(
-              padding: EdgeInsets.only(bottom: 25.h, left: 20.w),
-              child: Row(
-                children: [
-                  Container(
-                    width: 100.w,
-                    height: 100.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xFFABABAB)),
-                    ),
-                    child: const Icon(Icons.add, color: Color(0xFF666666)),
-                  ),
-                ],
-              ),
-            ),
+
             //
             //
             //
             /// 글 올리기 Button
             GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                await postModefy(
+                    id,
+                    titleController.text,
+                    languageController.text,
+                    contentController.text,
+                    errorController.issueState,
+                    majorController.majorState);
+
+                await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('수정이 완료 되었습니다.'),
+                      actions: [
+                        MaterialButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('확인'),
+                        )
+                      ],
+                    );
+                  },
+                );
+
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => Details(id: id),
+                    ),
+                    (route) => false);
               },
               child: Container(
                 width: 330.w,
