@@ -116,7 +116,7 @@ class _CommentModeFyState extends State<CommentModeFy> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('댓글이 생성되지 않았습니다.'),
+                        title: const Text('댓글이 수정되지 않았습니다.'),
                         content: const Text('글자수 제한(5글자 이하)'),
                         actions: [
                           MaterialButton(
@@ -134,7 +134,7 @@ class _CommentModeFyState extends State<CommentModeFy> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('댓글이 생성되지 않았습니다.'),
+                        title: const Text('댓글이 수정되지 않았습니다.'),
                         content: const Text('글자수 제한(5000글자 이상)'),
                         actions: [
                           MaterialButton(
@@ -158,7 +158,7 @@ class _CommentModeFyState extends State<CommentModeFy> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('댓글이 생성되었습니다'),
+                        title: const Text('댓글이 수정되었습니다'),
                         actions: [
                           MaterialButton(
                             onPressed: () {
