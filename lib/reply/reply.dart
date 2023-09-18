@@ -16,7 +16,7 @@ import 'package:up/url.dart';
 enum SampleItem { modify, del }
 
 Future delPost(id) async {
-  final url = '$baseUrl/post/$id';
+  final url = '$baseUrl/comment/$id';
 
   const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
