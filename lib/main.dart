@@ -5,6 +5,7 @@ import 'package:up/provider/userId_provider.dart';
 import 'Sign in and Sign up/choose.dart';
 import 'provider/error_provider.dart';
 import 'package:up/provider/comment_provider.dart';
+import 'package:up/provider/image_provider.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CommentController()),
         ChangeNotifierProvider(create: (context) => UserIdControllder()),
         ChangeNotifierProvider(create: (context) => PostIdController()),
+        ChangeNotifierProvider(create: (context) => AddImagePicker()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(430, 932),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -17,7 +19,39 @@ import 'package:up/model/createId.dart';
 
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/provider/error_provider.dart';
+import 'package:up/provider/image_provider.dart';
 import 'package:up/widget/majorDropdown.dart';
+import 'package:up/model/refresh_token.dart';
+
+Future postImage(image, int id) async {
+  Dio dio = Dio();
+  const storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'accessToken');
+
+  dio.options.contentType = 'multipart/form-data';
+  dio.options.headers["Authorization"] = "Bearer $token";
+
+  String imagePath = image.path;
+
+  String url = "$baseUrl/post/postImage/$id";
+
+  try {
+    FormData formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(imagePath),
+    });
+
+    Response response = await dio.post(url, data: formData);
+
+    if (response.statusCode == 200) {
+      print('이미지 업로드 성공');
+      print('서버 응답: ${response.data}');
+    } else {
+      print('이미지 업로드 실패 ${response.data}');
+    }
+  } catch (e) {
+    print('오류 발생: $e');
+  }
+}
 
 Future<CreateId> postCreate(String title, String language, String content,
     String selectedState, String major) async {
@@ -45,6 +79,9 @@ Future<CreateId> postCreate(String title, String language, String content,
   if (response.statusCode == 201) {
     return CreateId.fromJson(jsonDecode(
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+  } else if (response.statusCode == 401) {
+    refreshToken();
+    return postCreate(title, language, content, selectedState, major);
   } else {
     throw Exception(response.body);
   }
@@ -66,21 +103,10 @@ class _CreateBodyState extends State<CreateBody> {
 
   @override
   Widget build(BuildContext context) {
-    XFile? image;
-    final ImagePicker picker = ImagePicker();
-
     var postIdController = Provider.of<PostIdController>(context);
-
-    Future<void> getImage(ImageSource imageSource) async {
-      final pickedFile =
-          await picker.pickImage(source: imageSource, imageQuality: 100);
-      setState(() {
-        image = XFile(pickedFile!.path);
-      });
-    }
-
-    var errorController = Provider.of<ErrorController>(context);
-    var majorController = Provider.of<MajorController>(context);
+    var errorController = Provider.of<ErrorController>(context, listen: false);
+    var majorController = Provider.of<MajorController>(context, listen: false);
+    var imageController = Provider.of<AddImagePicker>(context, listen: false);
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -323,34 +349,32 @@ class _CreateBodyState extends State<CreateBody> {
               children: [
                 Stack(
                   children: [
-                    image == null
-                        ? Container(
-                            width: 100.w,
-                            height: 100.w,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: const Color(0xFFABABAB)),
-                            ),
-                            child:
-                                const Icon(Icons.add, color: Color(0xFF666666)),
-                          )
-                        : Center(
-                            child: SizedBox(
-                              width: 100.w,
-                              height: 100.h,
-                              child: Image.file(
-                                File(image!.path),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                    //image == null ?
+                    Container(
+                      width: 100.w,
+                      height: 100.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFFABABAB)),
+                      ),
+                      child: const Icon(Icons.add, color: Color(0xFF666666)),
+                    ),
+                    // : Center(
+                    //     child: SizedBox(
+                    //       width: 100.w,
+                    //       height: 100.h,
+                    //       child: Image.file(
+                    //         File(image!.path),
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    //     ),
+                    //   ),
                     Center(
                       child: MaterialButton(
                           onPressed: () async {
-                            await getImage(ImageSource.gallery);
-                            print(image!.path);
+                            await imageController.getImage(ImageSource.gallery);
+                            print(imageController.image.path);
                           },
                           child: SizedBox(width: 100.w, height: 100.h)),
                     )
@@ -365,14 +389,35 @@ class _CreateBodyState extends State<CreateBody> {
           /// 글 올리기 Button
           GestureDetector(
             onTap: () async {
-              postIdController.addPostId(
+              await postIdController.addPostId(
                 titleController.text,
                 languageController.text,
                 contentController.text,
                 errorController.issueState,
                 majorController.majorState,
               );
-              print(postIdController.postId.toString());
+
+              print(
+                  '${postIdController.postId}------------------${imageController.image.path}');
+
+              await postImage(imageController.image, postIdController.postId);
+
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('글이 생성되었습니다.'),
+                    actions: [
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('확인'),
+                      )
+                    ],
+                  );
+                },
+              );
 
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(

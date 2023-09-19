@@ -3,14 +3,14 @@ import 'package:up/create/createbody.dart';
 import 'package:up/model/createId.dart';
 
 class PostIdController extends ChangeNotifier {
-  String _postId = '오류';
+  int _postId = 00000;
 
-  String get postId => _postId;
+  int get postId => _postId;
 
-  void addPostId(title, language, content, selectedState, major) async {
+  Future addPostId(title, language, content, selectedState, major) async {
     final CreateId postID =
         await postCreate(title, language, content, selectedState, major);
-    _postId = postID.id.toString();
+    _postId = postID.id!.toInt();
     notifyListeners();
   }
 }
