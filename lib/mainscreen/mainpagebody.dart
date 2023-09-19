@@ -133,79 +133,38 @@ class _MainPageBodyState extends State<MainPageBody> {
                 Padding(
                   padding: EdgeInsets.only(top: 7.h),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ///검색 초기화
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) => const MainPage(),
-                                ),
-                                (route) => false);
-                          },
-                          child: Container(
-                            width: 89.w,
-                            height: 25.h,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(7),
-                                border:
-                                    Border.all(color: const Color(0xFFABABAB))),
-                            child: Center(
-                                child: Text(
-                              '검색 초기화',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w200,
-                                fontStyle: FontStyle.normal,
-                                fontFamily: 'NotoSansKR',
-                              ),
-                            )),
-                          ),
+                      Container(
+                        width: 89.w,
+                        height: 25.h,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(7)),
+                          border: Border.all(color: const Color(0xFFABABAB)),
                         ),
+
+                        /// 오류 / 해결 드롭다운
+                        child: const ErrorDropdown(),
                       ),
                       //
                       //
-                      /// 드롭다운
-                      Row(
-                        children: [
-                          Container(
-                            width: 89.w,
-                            height: 25.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(7)),
-                              border:
-                                  Border.all(color: const Color(0xFFABABAB)),
-                            ),
-
-                            /// 오류 / 해결 드롭다운
-                            child: const ErrorDropdown(),
+                      //
+                      /// 전공 선택 드롭다운
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.w, left: 6.w),
+                        child: Container(
+                          width: 110.w,
+                          height: 25.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(7)),
+                            border: Border.all(color: const Color(0xFFABABAB)),
                           ),
-                          //
-                          //
-                          //
-                          /// 전공 선택 드롭다운
-                          Padding(
-                            padding: EdgeInsets.only(right: 20.w, left: 6.w),
-                            child: Container(
-                              width: 110.w,
-                              height: 25.h,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(7)),
-                                border:
-                                    Border.all(color: const Color(0xFFABABAB)),
-                              ),
-                              child: const Center(child: MajorDropdown()),
-                            ),
-                          ),
-                        ],
+                          child: const Center(child: MajorDropdown()),
+                        ),
                       ),
                     ],
                   ),
@@ -217,213 +176,223 @@ class _MainPageBodyState extends State<MainPageBody> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(top: 32.h),
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: snapshot.data!.postResponses!.length,
-                      itemBuilder: (context, index) {
-                        final String title = snapshot
-                            .data!.postResponses![index].title
-                            .toString();
-                        final String tag = snapshot
-                            .data!.postResponses![index].state
-                            .toString();
-                        final String day = snapshot
-                            .data!.postResponses![index].createDate
-                            .toString();
-                        final String major = snapshot
-                            .data!.postResponses![index].major
-                            .toString();
-                        final String name = snapshot
-                            .data!.postResponses![index].userNickname
-                            .toString();
-                        final String language = snapshot
-                            .data!.postResponses![index].language
-                            .toString();
-                        final String image = snapshot
-                            .data!.postResponses![index].profile
-                            .toString();
-                        final int id =
-                            snapshot.data!.postResponses![index].id!.toInt();
+                    child: RefreshIndicator(
+                      color: const Color(0xFFABABAB),
+                      onRefresh: () async {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const MainPage()),
+                            (route) => false);
+                      },
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: snapshot.data!.postResponses!.length,
+                        itemBuilder: (context, index) {
+                          final String title = snapshot
+                              .data!.postResponses![index].title
+                              .toString();
+                          final String tag = snapshot
+                              .data!.postResponses![index].state
+                              .toString();
+                          final String day = snapshot
+                              .data!.postResponses![index].createDate
+                              .toString();
+                          final String major = snapshot
+                              .data!.postResponses![index].major
+                              .toString();
+                          final String name = snapshot
+                              .data!.postResponses![index].userNickname
+                              .toString();
+                          final String language = snapshot
+                              .data!.postResponses![index].language
+                              .toString();
+                          final String image = snapshot
+                              .data!.postResponses![index].profile
+                              .toString();
+                          final int id =
+                              snapshot.data!.postResponses![index].id!.toInt();
 
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              right: 20.w, left: 20.w, bottom: 10.h),
-                          child: GestureDetector(
-                            /// 누르면 화면 들어감
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Details(
-                                    id: id,
-                                    key: key,
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                right: 20.w, left: 20.w, bottom: 10.h),
+                            child: GestureDetector(
+                              /// 누르면 화면 들어감
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Details(
+                                      id: id,
+                                      key: key,
+                                    ),
                                   ),
+                                );
+                              },
+                              child: Container(
+                                /// 주위 감싸는 컨테이너
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
-                              );
-                            },
-                            child: Container(
-                              /// 주위 감싸는 컨테이너
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: 5.h),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 20.h),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            ///제목
-                                            padding:
-                                                EdgeInsets.only(left: 17.w),
-                                            child: SizedBox(
-                                              width: 300.w,
-                                              child: Text(
-                                                title,
-                                                style: TextStyle(
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontStyle: FontStyle.normal,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            ///태그
-                                            padding:
-                                                EdgeInsets.only(right: 17.w),
-                                            child: Container(
-                                              width: 44.w,
-                                              height: 15.h,
-                                              decoration: BoxDecoration(
-                                                color: tag == '해결'
-                                                    ? const Color(0xFF7DB45A)
-                                                    : const Color(0xFFDA6156),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                        Radius.circular(10)),
-                                              ),
-                                              child: Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 5.h),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 20.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              ///제목
+                                              padding:
+                                                  EdgeInsets.only(left: 17.w),
+                                              child: SizedBox(
+                                                width: 300.w,
                                                 child: Text(
-                                                  tag,
-                                                  textAlign: TextAlign.center,
+                                                  title,
                                                   style: TextStyle(
-                                                    fontSize: 9.sp,
-                                                    fontFamily: 'NotoSansKR',
-                                                    color: Colors.black,
+                                                    fontSize: 17.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle: FontStyle.normal,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            Padding(
+                                              ///태그
+                                              padding:
+                                                  EdgeInsets.only(right: 17.w),
+                                              child: Container(
+                                                width: 44.w,
+                                                height: 15.h,
+                                                decoration: BoxDecoration(
+                                                  color: tag == '해결'
+                                                      ? const Color(0xFF7DB45A)
+                                                      : const Color(0xFFDA6156),
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(10)),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    tag,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 9.sp,
+                                                      fontFamily: 'NotoSansKR',
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 17.w, top: 5.h),
-                                      child: Row(
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 17.w, top: 5.h),
+                                        child: Row(
+                                          children: [
+                                            Image.asset("assets/img/Star.png"),
+                                            SizedBox(width: 3.w),
+
+                                            /// 전공
+                                            Text(
+                                              major,
+                                              style: TextStyle(
+                                                fontSize: 9.sp,
+                                                fontFamily: 'NotoSansKR',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Image.asset("assets/img/World.png"),
+                                            SizedBox(width: 3.w),
+
+                                            /// 언어
+                                            Text(
+                                              language,
+                                              style: TextStyle(
+                                                fontSize: 9.sp,
+                                                fontFamily: 'NotoSansKR',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
                                         children: [
-                                          Image.asset("assets/img/Star.png"),
-                                          SizedBox(width: 3.w),
-
-                                          /// 전공
-                                          Text(
-                                            major,
-                                            style: TextStyle(
-                                              fontSize: 9.sp,
-                                              fontFamily: 'NotoSansKR',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          SizedBox(width: 10.w),
-                                          Image.asset("assets/img/World.png"),
-                                          SizedBox(width: 3.w),
-
-                                          /// 언어
-                                          Text(
-                                            language,
-                                            style: TextStyle(
-                                              fontSize: 9.sp,
-                                              fontFamily: 'NotoSansKR',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        /// 프로필 이미지
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 17.w, top: 8.w),
-                                          child: SizedBox(
-                                            width: 20.w,
-                                            height: 20.h,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Checkbox.width),
-                                              child: Image.network(
-                                                image,
-                                                width: 17.w,
-                                                height: 17.h,
-                                                fit: BoxFit.cover,
+                                          /// 프로필 이미지
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 17.w, top: 8.w),
+                                            child: SizedBox(
+                                              width: 20.w,
+                                              height: 20.h,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Checkbox.width),
+                                                child: Image.network(
+                                                  image,
+                                                  width: 17.w,
+                                                  height: 17.h,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(width: 4.w),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 10.h),
+                                          SizedBox(width: 4.w),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.h),
 
-                                          /// 이름
-                                          child: Text(
-                                            name,
-                                            style: TextStyle(
-                                              fontSize: 9.sp,
-                                              fontFamily: 'NotoSansKR',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 14.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          /// 제작 날짜
-                                          Text(
-                                            day,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 8.sp,
-                                              fontWeight: FontWeight.w100,
+                                            /// 이름
+                                            child: Text(
+                                              name,
+                                              style: TextStyle(
+                                                fontSize: 9.sp,
+                                                fontFamily: 'NotoSansKR',
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 14.w),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            /// 제작 날짜
+                                            Text(
+                                              day,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 8.sp,
+                                                fontWeight: FontWeight.w100,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 )
