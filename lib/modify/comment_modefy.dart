@@ -81,125 +81,130 @@ class _CommentModeFyState extends State<CommentModeFy> {
           },
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 30.h, bottom: 36.h),
-              child: Container(
-                width: 390.w,
-                height: 520.h,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFABABAB)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextField(
-                  controller: commentController,
-                  maxLines: 1000,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          //
-          //
-          /// 수정하기 버튼
-          Center(
-            child: GestureDetector(
-              onTap: () async {
-                if (commentController.text.length < 5) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('댓글이 수정되지 않았습니다.'),
-                        content: const Text('글자수 제한(5글자 이하)'),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('확인'),
-                          )
-                        ],
-                      );
-                    },
-                  );
-                } else if (commentController.text.length > 5000) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('댓글이 수정되지 않았습니다.'),
-                        content: const Text('글자수 제한(5000글자 이상)'),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('확인'),
-                          )
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  // commentIdController.addCommentId(
-                  //   id,
-                  //   commentTextController.text,
-                  // );
-                  commentModiFy(id, commentTextId, commentController.text);
-
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('댓글이 수정되었습니다'),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('확인'),
-                          )
-                        ],
-                      );
-                    },
-                  );
-                  //
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => const MainPage(),
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 30.h, bottom: 36.h),
+                  child: Container(
+                    width: 390.w,
+                    height: 520.h,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xFFABABAB)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      controller: commentController,
+                      maxLines: 1000,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
                       ),
-                      (route) => false);
-                }
-              },
-              child: Container(
-                width: 390.w,
-                height: 45.h,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF191C1B),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    '수정하기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'NotoSansKR',
                     ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
+              //
+              //
+              /// 수정하기 버튼
+              Center(
+                child: GestureDetector(
+                  onTap: () async {
+                    if (commentController.text.length < 5) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('댓글이 수정되지 않았습니다.'),
+                            content: const Text('글자수 제한(5글자 이하)'),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('확인'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else if (commentController.text.length > 5000) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('댓글이 수정되지 않았습니다.'),
+                            content: const Text('글자수 제한(5000글자 이상)'),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('확인'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      // commentIdController.addCommentId(
+                      //   id,
+                      //   commentTextController.text,
+                      // );
+                      commentModiFy(id, commentTextId, commentController.text);
+
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('댓글이 수정되었습니다'),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('확인'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                      //
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const MainPage(),
+                          ),
+                          (route) => false);
+                    }
+                  },
+                  child: Container(
+                    width: 390.w,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF191C1B),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '수정하기',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'NotoSansKR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
