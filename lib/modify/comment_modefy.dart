@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:up/mainscreen/mainpage.dart';
 
 import 'package:up/url.dart';
-import 'package:up/reply/reply.dart';
 
 Future commentModiFy(id, commentTextId, comment) async {
   final url = '$baseUrl/comment/$commentTextId';
@@ -173,7 +173,7 @@ class _CommentModeFyState extends State<CommentModeFy> {
                   //
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => CommentDetails(id: id),
+                        builder: (context) => const MainPage(),
                       ),
                       (route) => false);
                 }
