@@ -19,11 +19,9 @@ import 'package:up/model/postMainList.dart';
 import 'package:up/url.dart';
 
 /// mainList 받기
-Future<PostMainList> getList(
-  String? title,
-  String? state,
-  String? major,
-) async {
+Future<PostMainList> getList(String? title,
+    String? state,
+    String? major,) async {
   title = title ?? '';
   major = major ?? '';
 
@@ -58,19 +56,26 @@ Future<PostMainList> getList(
 ///
 ///
 
-class MainPageBody extends StatefulWidget {
-  const MainPageBody({super.key});
+class SearchPageBody extends StatefulWidget {
+  final String title, state, major;
+
+  const SearchPageBody({
+    required this.title,
+    required this.state,
+    required this.major,
+    super.key,
+  });
 
   @override
-  State<MainPageBody> createState() => _MainPageBodyState();
+  State<SearchPageBody> createState() => _SearchBodyState();
 }
 
-class _MainPageBodyState extends State<MainPageBody> {
+class _SearchBodyState extends State<SearchPageBody> {
   Future<PostMainList>? postList;
 
   @override
   void initState() {
-    postList = getList(null, null, null);
+    postList = getList(widget.title, widget.state, widget.major);
     super.initState();
   }
 
@@ -88,10 +93,11 @@ class _MainPageBodyState extends State<MainPageBody> {
           if (snapshot.hasData) {
             return Column(
               children: [
+
                 ///제목을 입력해주세요 검색창
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 20.w, right: 20.w, top: 29.64.h),
+                  EdgeInsets.only(left: 20.w, right: 20.w, top: 29.64.h),
                   child: Container(
                     width: 390.w,
                     height: 45.h,
@@ -111,12 +117,13 @@ class _MainPageBodyState extends State<MainPageBody> {
                             onPressed: () async {
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                    builder: (context) => SearchPage(
-                                        title: maintitleController.text,
-                                        state: errorController.issueState,
-                                        major: majorController.majorState),
+                                    builder: (context) =>
+                                        SearchPage(
+                                            title: maintitleController.text,
+                                            state: errorController.issueState,
+                                            major: majorController.majorState),
                                   ),
-                                  (route) => false);
+                                      (route) => false);
                             },
                             icon: const Icon(Icons.search),
                           ),
@@ -139,7 +146,7 @@ class _MainPageBodyState extends State<MainPageBody> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7)),
+                          const BorderRadius.all(Radius.circular(7)),
                           border: Border.all(color: const Color(0xFFABABAB)),
                         ),
 
@@ -158,7 +165,7 @@ class _MainPageBodyState extends State<MainPageBody> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7)),
+                            const BorderRadius.all(Radius.circular(7)),
                             border: Border.all(color: const Color(0xFFABABAB)),
                           ),
                           child: const Center(child: MajorDropdown()),
@@ -200,30 +207,33 @@ class _MainPageBodyState extends State<MainPageBody> {
                             .data!.postResponses![index].profile
                             .toString();
                         final int id =
-                            snapshot.data!.postResponses![index].id!.toInt();
+                        snapshot.data!.postResponses![index].id!.toInt();
 
                         return Padding(
                           padding: EdgeInsets.only(
                               right: 20.w, left: 20.w, bottom: 10.h),
                           child: GestureDetector(
+
                             /// 누르면 화면 들어감
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Details(
-                                    id: id,
-                                    key: key,
-                                  ),
+                                  builder: (context) =>
+                                      Details(
+                                        id: id,
+                                        key: key,
+                                      ),
                                 ),
                               );
                             },
                             child: Container(
+
                               /// 주위 감싸는 컨테이너
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                BorderRadius.all(Radius.circular(10)),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(bottom: 5.h),
@@ -234,14 +244,15 @@ class _MainPageBodyState extends State<MainPageBody> {
                                       padding: EdgeInsets.only(top: 20.h),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Padding(
+
                                             ///제목
                                             padding:
-                                                EdgeInsets.only(left: 17.w),
+                                            EdgeInsets.only(left: 17.w),
                                             child: SizedBox(
                                               width: 300.w,
                                               child: Text(
@@ -255,9 +266,10 @@ class _MainPageBodyState extends State<MainPageBody> {
                                             ),
                                           ),
                                           Padding(
+
                                             ///태그
                                             padding:
-                                                EdgeInsets.only(right: 17.w),
+                                            EdgeInsets.only(right: 17.w),
                                             child: Container(
                                               width: 44.w,
                                               height: 15.h,
@@ -266,8 +278,8 @@ class _MainPageBodyState extends State<MainPageBody> {
                                                     ? const Color(0xFF7DB45A)
                                                     : const Color(0xFFDA6156),
                                                 borderRadius:
-                                                    const BorderRadius.all(
-                                                        Radius.circular(10)),
+                                                const BorderRadius.all(
+                                                    Radius.circular(10)),
                                               ),
                                               child: Center(
                                                 child: Text(
@@ -287,7 +299,7 @@ class _MainPageBodyState extends State<MainPageBody> {
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(left: 17.w, top: 5.h),
+                                      EdgeInsets.only(left: 17.w, top: 5.h),
                                       child: Row(
                                         children: [
                                           Image.asset("assets/img/Star.png"),
@@ -320,6 +332,7 @@ class _MainPageBodyState extends State<MainPageBody> {
                                     ),
                                     Row(
                                       children: [
+
                                         /// 프로필 이미지
                                         Padding(
                                           padding: EdgeInsets.only(
@@ -329,8 +342,8 @@ class _MainPageBodyState extends State<MainPageBody> {
                                             height: 20.h,
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      Checkbox.width),
+                                              BorderRadius.circular(
+                                                  Checkbox.width),
                                               child: Image.network(
                                                 image,
                                                 width: 17.w,
@@ -360,8 +373,9 @@ class _MainPageBodyState extends State<MainPageBody> {
                                       padding: EdgeInsets.only(right: 14.w),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.end,
                                         children: [
+
                                           /// 제작 날짜
                                           Text(
                                             day,
