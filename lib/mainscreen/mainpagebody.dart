@@ -17,14 +17,12 @@ import 'package:up/viewdetails/detailssaffold.dart';
 import 'package:up/widget/majorDropdown.dart';
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/model/postMainList.dart';
+import 'package:up/model/refresh_token.dart';
 import 'package:up/url.dart';
 
 /// mainList 받기
 Future<PostMainList> getList(
-  String? title,
-  String? state,
-  String? major,
-) async {
+    String? title, String? state, String? major) async {
   title = title ?? '';
   major = major ?? '';
 
@@ -48,6 +46,9 @@ Future<PostMainList> getList(
   if (response.statusCode == 200) {
     return PostMainList.fromJson(jsonDecode(
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+  } else if (response.statusCode == 401) {
+    refreshToken();
+    return getList(title, state, major);
   } else {
     throw Exception(utf8.decode(response.bodyBytes));
   }

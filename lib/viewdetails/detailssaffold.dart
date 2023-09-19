@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'package:up/model/refresh_token.dart';
 import 'package:up/viewdetails/detailsappbar.dart';
 import 'package:up/viewdetails/detailsbody.dart';
 import 'package:up/url.dart';
@@ -30,6 +31,9 @@ class Details extends StatefulWidget {
     if (response.statusCode == 200) {
       return UserDetails.fromJson(jsonDecode(
           utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+    } else if (response.statusCode == 401) {
+      refreshToken();
+      return getDetails();
     } else {
       throw Exception(response.body);
     }

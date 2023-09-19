@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:up/mainscreen/mainpage.dart';
 
+import 'package:up/model/refresh_token.dart';
 import 'package:up/provider/userId_provider.dart';
 import 'package:up/reply/reply.dart';
 import 'package:up/modify/modefy.dart';
@@ -29,6 +30,9 @@ Future delPost(String id) async {
 
   if (response.statusCode != 204) {
     throw Exception(response.body);
+  } else if (response.statusCode == 401) {
+    refreshToken();
+    return delPost(id);
   }
 }
 

@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:up/model/refresh_token.dart';
 import 'package:up/viewdetails/detailssaffold.dart';
 import 'package:up/model/postUserList.dart';
 import 'package:up/model/userProfile.dart';
@@ -28,6 +29,9 @@ Future<PostUserList> getList() async {
     return PostUserList.fromJson(jsonDecode(
       utf8.decode(response.bodyBytes),
     )); //utf8.decode(response.bodyBytes);
+  } else if (response.statusCode == 401) {
+    refreshToken();
+    return getList();
   } else {
     throw Exception(response.body);
   }
@@ -45,6 +49,9 @@ Future<UserProfile> getProfile() async {
   if (response.statusCode == 200) {
     return UserProfile.fromJson(jsonDecode(
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+  } else if (response.statusCode == 401) {
+    refreshToken();
+    return getProfile();
   } else {
     throw Exception(response.body);
   }

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:up/provider/error_provider.dart';
 import 'package:up/searchpage/searchpage_main.dart';
 
+import 'package:up/model/refresh_token.dart';
 import 'package:up/mainscreen/mainpage.dart';
 import 'package:up/viewdetails/detailssaffold.dart';
 import 'package:up/widget/majorDropdown.dart';
@@ -48,6 +49,9 @@ Future<PostMainList> getList(
   if (response.statusCode == 200) {
     return PostMainList.fromJson(jsonDecode(
         utf8.decode(response.bodyBytes))); //utf8.decode(response.bodyBytes);
+  } else if (response.statusCode == 401) {
+    refreshToken();
+    return getList(title, state, major);
   } else {
     throw Exception(utf8.decode(response.bodyBytes));
   }
