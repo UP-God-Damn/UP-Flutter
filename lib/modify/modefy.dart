@@ -9,10 +9,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:provider/provider.dart';
+import 'package:up/mainscreen/mainpage.dart';
 import 'package:up/provider/error_provider.dart';
 
 import 'package:up/url.dart';
-import 'package:up/viewdetails/detailssaffold.dart';
 
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/widget/majorDropdown.dart';
@@ -307,37 +307,77 @@ class Modefy extends StatelessWidget {
             //
             //
             //
-            /// 글 올리기 Button
+            /// 글 수정하기 Button
             GestureDetector(
               onTap: () async {
-                await postModefy(
-                    id,
-                    titleController.text,
-                    languageController.text,
-                    contentController.text,
-                    errorController.issueState,
-                    majorController.majorState);
+                if (titleController.text.length < 5 ||
+                    titleController.text.length > 25) {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('수정을 실패하였습니다'),
+                        content: const Text('제목이 5글자를 넘지 않거나 25글자를 넘겼습니다.'),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('확인'),
+                          )
+                        ],
+                      );
+                    },
+                  );
+                } else if (contentController.text.length < 20 ||
+                    contentController.text.length > 10000) {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('수정을 실패하였습니다'),
+                        content: const Text('내용이 20글자를 넘지 않거나 10000글자를 넘겼습니다.'),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('확인'),
+                          )
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  await postModefy(
+                      id,
+                      titleController.text,
+                      languageController.text,
+                      contentController.text,
+                      errorController.issueState,
+                      majorController.majorState);
 
-                await showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('수정이 완료 되었습니다.'),
-                      actions: [
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('확인'),
-                        )
-                      ],
-                    );
-                  },
-                );
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('수정이 완료 되었습니다.'),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('확인'),
+                          )
+                        ],
+                      );
+                    },
+                  );
+                }
 
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) => Details(id: id),
+                      builder: (context) => const MainPage(),
                     ),
                     (route) => false);
               },
