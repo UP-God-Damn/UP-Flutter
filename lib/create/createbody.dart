@@ -23,7 +23,7 @@ import 'package:up/provider/image_provider.dart';
 import 'package:up/widget/majorDropdown.dart';
 import 'package:up/model/refresh_token.dart';
 
-Future postImage(image, int id) async {
+Future postImage(image, int id, context) async {
   Dio dio = Dio();
   const storage = FlutterSecureStorage();
   final token = await storage.read(key: 'accessToken');
@@ -49,7 +49,23 @@ Future postImage(image, int id) async {
       print('이미지 업로드 실패 ${response.data}');
     }
   } catch (e) {
-    print('오류 발생: $e');
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('이미지를 올리지 못했습니다'),
+          content: const Text('사진의 용량이 너무 높습니다.'),
+          actions: [
+            MaterialButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            )
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -336,49 +352,40 @@ class _CreateBodyState extends State<CreateBody> {
                     color: Colors.black,
                   ),
                 ),
-              ],
-            ),
-          ),
-          //
-          //
-          //
-          /// 사진 더하기
-          Padding(
-            padding: EdgeInsets.only(bottom: 25.h, left: 20.w, top: 5.h),
-            child: Row(
-              children: [
-                Stack(
-                  children: [
-                    //image == null ?
-                    Container(
+                Padding(
+                  padding: EdgeInsets.only(left: 10.w),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await imageController.getImage(ImageSource.gallery);
+
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('이미지가 추가 되었습니다.'),
+                            content: Text(imageController.image.path),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('확인'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
                       width: 100.w,
-                      height: 100.w,
+                      height: 25.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: const Color(0xFFABABAB)),
                       ),
-                      child: const Icon(Icons.add, color: Color(0xFF666666)),
+                      child: const Center(child: Text('사진 추가하기')),
                     ),
-                    // : Center(
-                    //     child: SizedBox(
-                    //       width: 100.w,
-                    //       height: 100.h,
-                    //       child: Image.file(
-                    //         File(image!.path),
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     ),
-                    //   ),
-                    Center(
-                      child: MaterialButton(
-                          onPressed: () async {
-                            await imageController.getImage(ImageSource.gallery);
-                            print(imageController.image.path);
-                          },
-                          child: SizedBox(width: 100.w, height: 100.h)),
-                    )
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -387,60 +394,104 @@ class _CreateBodyState extends State<CreateBody> {
           //
           //
           /// 글 올리기 Button
-          GestureDetector(
-            onTap: () async {
-              await postIdController.addPostId(
-                titleController.text,
-                languageController.text,
-                contentController.text,
-                errorController.issueState,
-                majorController.majorState,
-              );
-
-              print(
-                  '${postIdController.postId}------------------${imageController.image.path}');
-
-              await postImage(imageController.image, postIdController.postId);
-
-              await showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('글이 생성되었습니다.'),
-                    actions: [
-                      MaterialButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('확인'),
-                      )
-                    ],
+          Padding(
+            padding: EdgeInsets.only(top: 130.h),
+            child: GestureDetector(
+              onTap: () async {
+                if (titleController.text.length < 5 ||
+                    titleController.text.length > 25) {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('글 올리기를 실패하였습니다.'),
+                        content: const Text('제목이 5글자를 넘지 못했거나 25글자를 넘었습니다.'),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('확인'),
+                          )
+                        ],
+                      );
+                    },
                   );
-                },
-              );
+                } else if (contentController.text.length < 20 ||
+                    contentController.text.length > 10000) {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('글 올리기를 실패하였습니다.'),
+                        content:
+                            const Text('내용이 20글자를 넘지 못했거나 10000글자를 넘었습니다.'),
+                        actions: [
+                          MaterialButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('확인'))
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  await postIdController.addPostId(
+                    titleController.text,
+                    languageController.text,
+                    contentController.text,
+                    errorController.issueState,
+                    majorController.majorState,
+                  );
 
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const MainPage(),
-                  ),
-                  (route) => false);
-            },
-            child: Container(
-              width: 330.w,
-              height: 45.h,
-              decoration: const BoxDecoration(
-                color: Color(0xFF191C1B),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: Center(
-                child: Text(
-                  '글 올리기',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'NotoSansKR',
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.2,
+                  print(
+                      '${postIdController.postId}------------------${imageController.image.path}');
+
+                  await postImage(
+                      imageController.image, postIdController.postId, context);
+
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('글이 생성되었습니다.'),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('확인'),
+                          )
+                        ],
+                      );
+                    },
+                  );
+
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const MainPage(),
+                      ),
+                      (route) => false);
+                }
+              },
+              child: Container(
+                width: 330.w,
+                height: 45.h,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF191C1B),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Center(
+                  child: Text(
+                    '글 올리기',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'NotoSansKR',
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.2,
+                    ),
                   ),
                 ),
               ),

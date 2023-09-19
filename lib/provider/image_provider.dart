@@ -10,7 +10,7 @@ class AddImagePicker extends ChangeNotifier {
     final ImagePicker picker = ImagePicker();
 
     final pickedFile =
-    await picker.pickImage(source: imageSource, imageQuality: 100);
+        await picker.pickImage(source: imageSource, imageQuality: 100);
     _image = XFile(pickedFile!.path);
     notifyListeners();
   }
