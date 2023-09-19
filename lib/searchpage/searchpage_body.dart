@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:up/provider/error_provider.dart';
 import 'package:up/searchpage/searchpage_main.dart';
 
+import 'package:up/mainscreen/mainpage.dart';
 import 'package:up/viewdetails/detailssaffold.dart';
 import 'package:up/widget/majorDropdown.dart';
 import 'package:up/widget/errorDropdown.dart';
@@ -19,9 +20,11 @@ import 'package:up/model/postMainList.dart';
 import 'package:up/url.dart';
 
 /// mainList 받기
-Future<PostMainList> getList(String? title,
-    String? state,
-    String? major,) async {
+Future<PostMainList> getList(
+  String? title,
+  String? state,
+  String? major,
+) async {
   title = title ?? '';
   major = major ?? '';
 
@@ -84,7 +87,7 @@ class _SearchBodyState extends State<SearchPageBody> {
     var errorController = Provider.of<ErrorController>(context, listen: false);
     var majorController = Provider.of<MajorController>(context, listen: false);
 
-    final maintitleController = TextEditingController();
+    final maintitleController = TextEditingController(text: widget.title);
     final key = widget.key;
 
     return FutureBuilder(
@@ -93,11 +96,10 @@ class _SearchBodyState extends State<SearchPageBody> {
           if (snapshot.hasData) {
             return Column(
               children: [
-
                 ///제목을 입력해주세요 검색창
                 Padding(
                   padding:
-                  EdgeInsets.only(left: 20.w, right: 20.w, top: 29.64.h),
+                      EdgeInsets.only(left: 20.w, right: 20.w, top: 29.64.h),
                   child: Container(
                     width: 390.w,
                     height: 45.h,
@@ -117,13 +119,12 @@ class _SearchBodyState extends State<SearchPageBody> {
                             onPressed: () async {
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        SearchPage(
-                                            title: maintitleController.text,
-                                            state: errorController.issueState,
-                                            major: majorController.majorState),
+                                    builder: (context) => SearchPage(
+                                        title: maintitleController.text,
+                                        state: errorController.issueState,
+                                        major: majorController.majorState),
                                   ),
-                                      (route) => false);
+                                  (route) => false);
                             },
                             icon: const Icon(Icons.search),
                           ),
@@ -134,42 +135,83 @@ class _SearchBodyState extends State<SearchPageBody> {
                 ),
                 //
                 //
-                /// 오류/해결 드롭다운
+                /// List위 장식들
                 Padding(
                   padding: EdgeInsets.only(top: 7.h),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 89.w,
-                        height: 25.h,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(7)),
-                          border: Border.all(color: const Color(0xFFABABAB)),
+                      ///검색 초기화
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) => const MainPage(),
+                                ),
+                                (route) => false);
+                          },
+                          child: Container(
+                            width: 89.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(7),
+                                border:
+                                    Border.all(color: const Color(0xFFABABAB))),
+                            child: Center(
+                                child: Text(
+                              '검색 초기화',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w200,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'NotoSansKR',
+                              ),
+                            )),
+                          ),
                         ),
-
-                        /// 오류 / 해결 드롭다운
-                        child: const ErrorDropdown(),
                       ),
                       //
                       //
-                      //
-                      /// 전공 선택 드롭다운
-                      Padding(
-                        padding: EdgeInsets.only(right: 20.w, left: 6.w),
-                        child: Container(
-                          width: 110.w,
-                          height: 25.h,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(7)),
-                            border: Border.all(color: const Color(0xFFABABAB)),
+                      /// 드롭다운
+                      Row(
+                        children: [
+                          Container(
+                            width: 89.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(7)),
+                              border:
+                                  Border.all(color: const Color(0xFFABABAB)),
+                            ),
+
+                            /// 오류 / 해결 드롭다운
+                            child: const ErrorDropdown(),
                           ),
-                          child: const Center(child: MajorDropdown()),
-                        ),
+                          //
+                          //
+                          //
+                          /// 전공 선택 드롭다운
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w, left: 6.w),
+                            child: Container(
+                              width: 110.w,
+                              height: 25.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(7)),
+                                border:
+                                    Border.all(color: const Color(0xFFABABAB)),
+                              ),
+                              child: const Center(child: MajorDropdown()),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -207,33 +249,30 @@ class _SearchBodyState extends State<SearchPageBody> {
                             .data!.postResponses![index].profile
                             .toString();
                         final int id =
-                        snapshot.data!.postResponses![index].id!.toInt();
+                            snapshot.data!.postResponses![index].id!.toInt();
 
                         return Padding(
                           padding: EdgeInsets.only(
                               right: 20.w, left: 20.w, bottom: 10.h),
                           child: GestureDetector(
-
                             /// 누르면 화면 들어감
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      Details(
-                                        id: id,
-                                        key: key,
-                                      ),
+                                  builder: (context) => Details(
+                                    id: id,
+                                    key: key,
+                                  ),
                                 ),
                               );
                             },
                             child: Container(
-
                               /// 주위 감싸는 컨테이너
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(bottom: 5.h),
@@ -244,15 +283,14 @@ class _SearchBodyState extends State<SearchPageBody> {
                                       padding: EdgeInsets.only(top: 20.h),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-
                                             ///제목
                                             padding:
-                                            EdgeInsets.only(left: 17.w),
+                                                EdgeInsets.only(left: 17.w),
                                             child: SizedBox(
                                               width: 300.w,
                                               child: Text(
@@ -266,10 +304,9 @@ class _SearchBodyState extends State<SearchPageBody> {
                                             ),
                                           ),
                                           Padding(
-
                                             ///태그
                                             padding:
-                                            EdgeInsets.only(right: 17.w),
+                                                EdgeInsets.only(right: 17.w),
                                             child: Container(
                                               width: 44.w,
                                               height: 15.h,
@@ -278,8 +315,8 @@ class _SearchBodyState extends State<SearchPageBody> {
                                                     ? const Color(0xFF7DB45A)
                                                     : const Color(0xFFDA6156),
                                                 borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(10)),
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10)),
                                               ),
                                               child: Center(
                                                 child: Text(
@@ -299,7 +336,7 @@ class _SearchBodyState extends State<SearchPageBody> {
                                     ),
                                     Padding(
                                       padding:
-                                      EdgeInsets.only(left: 17.w, top: 5.h),
+                                          EdgeInsets.only(left: 17.w, top: 5.h),
                                       child: Row(
                                         children: [
                                           Image.asset("assets/img/Star.png"),
@@ -332,7 +369,6 @@ class _SearchBodyState extends State<SearchPageBody> {
                                     ),
                                     Row(
                                       children: [
-
                                         /// 프로필 이미지
                                         Padding(
                                           padding: EdgeInsets.only(
@@ -342,8 +378,8 @@ class _SearchBodyState extends State<SearchPageBody> {
                                             height: 20.h,
                                             child: ClipRRect(
                                               borderRadius:
-                                              BorderRadius.circular(
-                                                  Checkbox.width),
+                                                  BorderRadius.circular(
+                                                      Checkbox.width),
                                               child: Image.network(
                                                 image,
                                                 width: 17.w,
@@ -373,9 +409,8 @@ class _SearchBodyState extends State<SearchPageBody> {
                                       padding: EdgeInsets.only(right: 14.w),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.end,
+                                            MainAxisAlignment.end,
                                         children: [
-
                                           /// 제작 날짜
                                           Text(
                                             day,

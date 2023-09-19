@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
+import 'package:up/mainscreen/mainpage.dart';
 import 'package:up/provider/error_provider.dart';
 import 'package:up/searchpage/searchpage_main.dart';
 
@@ -127,42 +128,83 @@ class _MainPageBodyState extends State<MainPageBody> {
                 ),
                 //
                 //
-                /// 오류/해결 드롭다운
+                /// List위 장식들
                 Padding(
                   padding: EdgeInsets.only(top: 7.h),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 89.w,
-                        height: 25.h,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(7)),
-                          border: Border.all(color: const Color(0xFFABABAB)),
+                      ///검색 초기화
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) => const MainPage(),
+                                ),
+                                (route) => false);
+                          },
+                          child: Container(
+                            width: 89.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(7),
+                                border:
+                                    Border.all(color: const Color(0xFFABABAB))),
+                            child: Center(
+                                child: Text(
+                              '검색 초기화',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w200,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'NotoSansKR',
+                              ),
+                            )),
+                          ),
                         ),
-
-                        /// 오류 / 해결 드롭다운
-                        child: const ErrorDropdown(),
                       ),
                       //
                       //
-                      //
-                      /// 전공 선택 드롭다운
-                      Padding(
-                        padding: EdgeInsets.only(right: 20.w, left: 6.w),
-                        child: Container(
-                          width: 110.w,
-                          height: 25.h,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(7)),
-                            border: Border.all(color: const Color(0xFFABABAB)),
+                      /// 드롭다운
+                      Row(
+                        children: [
+                          Container(
+                            width: 89.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(7)),
+                              border:
+                                  Border.all(color: const Color(0xFFABABAB)),
+                            ),
+
+                            /// 오류 / 해결 드롭다운
+                            child: const ErrorDropdown(),
                           ),
-                          child: const Center(child: MajorDropdown()),
-                        ),
+                          //
+                          //
+                          //
+                          /// 전공 선택 드롭다운
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w, left: 6.w),
+                            child: Container(
+                              width: 110.w,
+                              height: 25.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(7)),
+                                border:
+                                    Border.all(color: const Color(0xFFABABAB)),
+                              ),
+                              child: const Center(child: MajorDropdown()),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
