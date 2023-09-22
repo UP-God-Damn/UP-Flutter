@@ -33,7 +33,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CommentController()),
         ChangeNotifierProvider(create: (context) => UserIdControllder()),
         ChangeNotifierProvider(create: (context) => PostIdController()),
-        ChangeNotifierProvider(create: (context) => AddImagePicker()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(430, 932),

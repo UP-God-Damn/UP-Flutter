@@ -19,7 +19,6 @@ import 'package:up/model/createId.dart';
 
 import 'package:up/widget/errorDropdown.dart';
 import 'package:up/provider/error_provider.dart';
-import 'package:up/provider/image_provider.dart';
 import 'package:up/widget/majorDropdown.dart';
 import 'package:up/model/refresh_token.dart';
 
@@ -111,18 +110,28 @@ class CreateBody extends StatefulWidget {
 }
 
 class _CreateBodyState extends State<CreateBody> {
+  XFile? image;
+
   Future<CreateId>? getId;
 
   final titleController = TextEditingController();
   final contentController = TextEditingController();
   final languageController = TextEditingController();
 
+  Future getImage(ImageSource imageSource) async {
+    final ImagePicker picker = ImagePicker();
+
+    final pickedFile =
+        await picker.pickImage(source: imageSource, imageQuality: 100);
+    image = XFile(pickedFile!.path);
+  }
+
   @override
   Widget build(BuildContext context) {
-    var postIdController = Provider.of<PostIdController>(context);
+    var postIdController =
+        Provider.of<PostIdController>(context, listen: false);
     var errorController = Provider.of<ErrorController>(context, listen: false);
     var majorController = Provider.of<MajorController>(context, listen: false);
-    var imageController = Provider.of<AddImagePicker>(context, listen: false);
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -338,64 +347,94 @@ class _CreateBodyState extends State<CreateBody> {
           //
           //
           //
-          /// 사진(제목)
-          Padding(
-            padding: EdgeInsets.only(left: 28.w, bottom: 5.h),
-            child: Row(
-              children: [
-                Text(
-                  '사진',
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'NotoSansKR',
-                    color: Colors.black,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w),
-                  child: GestureDetector(
-                    onTap: () async {
-                      await imageController.getImage(ImageSource.gallery);
 
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('이미지가 추가 되었습니다.'),
-                            content: Text(imageController.image.path),
-                            actions: [
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('확인'),
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Container(
-                      width: 100.w,
-                      height: 25.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: const Color(0xFFABABAB)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// 사진(제목)
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 28.w, bottom: 5.h),
+                    child: Text(
+                      '사진',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR',
+                        color: Colors.black,
                       ),
-                      child: const Center(child: Text('사진 추가하기')),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+
+              ///사진 더하기 버튼
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.w),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await getImage(ImageSource.gallery);
+
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('이미지가 추가 되었습니다.'),
+                              content: Text(image!.path),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                  child: const Text('확인'),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: image == null
+                          ? Container(
+                              width: 100.w,
+                              height: 100.w,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: const Color(0xFFABABAB)),
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
+                                  color: const Color(0xFF666666),
+                                  size: 30.w,
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: 100.w,
+                              height: 100.h,
+                              child: Image.file(
+                                File(image!.path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           //
           //
           //
           /// 글 올리기 Button
           Padding(
-            padding: EdgeInsets.only(top: 130.h),
+            padding: EdgeInsets.only(top: 25.h),
             child: GestureDetector(
               onTap: () async {
                 if (titleController.text.length < 5 ||
@@ -446,10 +485,9 @@ class _CreateBodyState extends State<CreateBody> {
                   );
 
                   print(
-                      '${postIdController.postId}------------------${imageController.image.path}');
+                      '${postIdController.postId}------------------${image!.path}');
 
-                  await postImage(
-                      imageController.image, postIdController.postId, context);
+                  await postImage(image, postIdController.postId, context);
 
                   await showDialog(
                     context: context,
