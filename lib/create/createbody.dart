@@ -53,7 +53,7 @@ Future postImage(image, int id, context) async {
       builder: (context) {
         return AlertDialog(
           title: const Text('이미지를 올리지 못했습니다'),
-          content: const Text('사진의 용량이 너무 높습니다.'),
+          content: const Text('사진의 용량이 너무 높습니다.\n 이미지를 올리지 못해 글씨만 올라가게 됩니다'),
           actions: [
             MaterialButton(
               onPressed: () {
