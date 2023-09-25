@@ -72,14 +72,8 @@ class _SignUpState extends State<SignUp> {
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SizedBox(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               Padding(
@@ -105,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                   decoration: const BoxDecoration(
                     color: Color(0xFFF3F3F3),
                     borderRadius:
-                    BorderRadius.only(topLeft: Radius.circular(80)),
+                        BorderRadius.only(topLeft: Radius.circular(80)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +153,7 @@ class _SignUpState extends State<SignUp> {
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 16.w),
@@ -263,8 +257,8 @@ class _SignUpState extends State<SignUp> {
                           reid == null
                               ? ''
                               : reid == true
-                              ? '아이디가 사용 가능합니다'
-                              : '아이디가 중복되었습니다',
+                                  ? '아이디가 사용 가능합니다'
+                                  : '아이디가 중복되었습니다',
                           style: TextStyle(
                             color: reid == true ? Colors.green : Colors.red,
                             fontSize: 12.sp,
@@ -301,11 +295,12 @@ class _SignUpState extends State<SignUp> {
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 16.w),
                                   child: TextField(
+                                    obscureText: true,
                                     controller: _pw,
                                     decoration: const InputDecoration(
                                       hintText: '비밀번호를 입력해주세요',
@@ -348,11 +343,12 @@ class _SignUpState extends State<SignUp> {
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 16.w),
                                     child: TextField(
+                                      obscureText: true,
                                       controller: _repw,
                                       decoration: const InputDecoration(
                                         hintText: '비밀번호를 다시 입력해주세요',
@@ -374,8 +370,8 @@ class _SignUpState extends State<SignUp> {
                           pwpw == null
                               ? ''
                               : pwpw == true
-                              ? '비밀번호가 일치합니다.'
-                              : '비밀번호가 일치하지 않습니다.',
+                                  ? '비밀번호가 일치합니다.'
+                                  : '비밀번호가 일치하지 않습니다.',
                           style: TextStyle(
                             color: pwpw == true ? Colors.green : Colors.red,
                             fontSize: 12.sp,
@@ -389,7 +385,6 @@ class _SignUpState extends State<SignUp> {
                       //
                       Column(
                         children: [
-
                           ///회원가입 버튼
                           Padding(
                             padding: EdgeInsets.only(top: 40.h),
@@ -411,9 +406,9 @@ class _SignUpState extends State<SignUp> {
                                             value: value.refreshToken);
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                const MainPage()),
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const MainPage()),
                                                 (route) => false);
                                       }
                                     }
@@ -430,7 +425,7 @@ class _SignUpState extends State<SignUp> {
                                 decoration: const BoxDecoration(
                                   color: Color(0xFF191C1B),
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Center(
                                   child: Text(
