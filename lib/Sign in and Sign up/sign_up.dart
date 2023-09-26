@@ -8,6 +8,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:up/Sign in and Sign up/sign_in.dart';
 import 'package:up/mainscreen/mainpage.dart';
+import 'package:up/provider/userId_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:up/model/postSignUp.dart';
 import 'package:up/url.dart';
@@ -67,6 +69,8 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    var userIdController = Provider.of<UserIdControllder>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFF191C1B),
       body: SingleChildScrollView(
@@ -404,11 +408,13 @@ class _SignUpState extends State<SignUp> {
                                         storage.write(
                                             key: 'refreshToken',
                                             value: value.refreshToken);
+                                        userIdController.getUserId(_id.text);
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const MainPage()),
+                                                  builder: (context) =>
+                                                      const MainPage(),
+                                                ),
                                                 (route) => false);
                                       }
                                     }
