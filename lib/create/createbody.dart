@@ -42,18 +42,17 @@ Future postImage(image, int id, context) async {
     Response response = await dio.post(url, data: formData);
 
     if (response.statusCode == 200) {
-      print('이미지 업로드 성공');
       print('서버 응답: ${response.data}');
     } else {
-      print('이미지 업로드 실패 ${response.data}');
+      print('서버 연결 실패 ${response.data}');
     }
   } catch (e) {
     await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('이미지를 올리지 못했습니다'),
-          content: const Text('사진의 용량이 너무 높습니다.\n 이미지를 올리지 못해 글씨만 올라가게 됩니다'),
+          title: const Text('서버와 접속 하지 못했습니다'),
+          content: const Text('이미지를 올리지 못해 글씨만 올라가게 됩니다'),
           actions: [
             MaterialButton(
               onPressed: () {
@@ -487,7 +486,9 @@ class _CreateBodyState extends State<CreateBody> {
                   print(
                       '${postIdController.postId}------------------${image!.path}');
 
-                  await postImage(image, postIdController.postId, context);
+                  if (image != null) {
+                    postImage(image, postIdController.postId, context);
+                  }
 
                   await showDialog(
                     context: context,
